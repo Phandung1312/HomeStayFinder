@@ -1,0 +1,114 @@
+<resources>
+    <string name="app_name">HomestayFinder</string>
+    <string name="default_notify_title">Message</string>
+    <string name="my_web_client_id">599441596002-c1u8enllj1v0b717l41ibd1eq2oqjkam.apps.googleusercontent.com</string>
+    <string name="button_text">OK</string>
+
+    //Confirm
+    <string name="confirm_agree">Đồng ý</string>
+    <string name="confirm_disagree">Không</string>
+    <string name="confirm_note">Chú ý</string>
+    <string name="confirm_logout">Bạn có muốn thoát tài khoản?</string>
+    <string name="confirm_remove">Bạn chắc chắn muốn xóa phòng này?</string>
+    //Title
+    <string name="Room_information">Thông tin phòng</string>
+    <string name="ROOM_TYPE">LOẠI PHÒNG</string>
+    <string name="Dormitory">Kí túc xá</string>
+    <string name="Room_for_rent">Phòng cho thuê</string>
+    <string name="Shared_room">Phòng ở ghép</string>
+    <string name="Whole_house">Nhà nguyên căn</string>
+    <string name="Apartment">Căn hộ</string>
+    <string name="NUMBER_OF_ROOMS">SỐ LƯỢNG PHÒNG</string>
+    <string name="Enter_the_number_rooms_you_want_to_rent">Nhập số lượng phòng bạn muốn cho thuê</string>
+    <string name="CAPACITY">SỨC CHỨA</string>
+    <string name="Enter_the_number_of_people_that_can_stay">Nhập số lượng người có thể ở / phòng</string>
+    <string name="Gender">GIỚI TÍNH</string>
+    <string name="All">Tất cả</string>
+    <string name="Male">Nam</string>
+    <string name="Female">Nữ</string>
+    <string name="ACREAGE">DIỆN TÍCH</string>
+    <string name="RENTAL_PRICE">GIÁ CHO THUÊ</string>
+    <string name="Enter_room_acreage">Nhập diện tích phòng (mét vuông)</string>
+    <string name="Enter_rental_price">Nhập giá cho thuê(VND)</string>
+    <string name="DEPOSIT_PRICE">GIÁ ĐẶT CỌC</string>
+    <string name="Enter_deposit_price">Nhập giá đặt cọc(VND)</string>
+    <string name="Enter_the_amout">Nhập số tiền(VND)</string>
+    <string name="ELECTRIC_PRICE">TIỀN ĐIỆN</string>
+    <string name="WATER_PRICE">TIỀN NƯỚC</string>
+    <string name="INTERNET">INTERNET</string>
+    <string name="Next">Tiếp theo</string>
+    <string name="Room_address">Địa chỉ phòng</string>
+    <string name="CITY">THÀNH PHỐ</string>
+    <string name="DISTRICT_COUNTY">QUẬN/HUYỆN</string>
+    <string name="Click_to_choose_city">Bấm để chọn thành phố</string>
+    <string name="WARD_COMMUNE">PHƯỜNG/XÃ</string>
+    <string name="Click_to_choose_ward_commune">Bấm để chọn Phường/Xã</string>
+    <string name="STREET_NAMES">TÊN ĐƯỜNG</string>
+    <string name="Enter_street_names">Nhập tên đường</string>
+    <string name="Apartment_number">SỐ NHÀ</string>
+    <string name="Example">Ví dụ: 257/66</string>
+    <string name="Click_to_choose_district_county">Bấm để chọn Quận/Huyện</string>
+    <string name="Utilities">Tiện ích</string>
+    <string name="Image_information_and_utilities">Thông tin hình ảnh và tiện ích</string>
+    <string name="Private_toilet">WC riêng</string>
+    <string name="Parking">Chỗ để xe</string>
+    <string name="Window">Cửa sổ</string>
+    <string name="Security">An ninh</string>
+    <string name="Wifi_network">Mạng wifi</string>
+    <string name="Free">Tự do</string>
+    <string name="Own_property">Chủ riêng</string>
+    <string name="Air_conditioning">Điều hòa</string>
+    <string name="Water_heater">Nóng lạnh</string>
+    <string name="Mezzanine">Gác lửng</string>
+    <string name="Kitchen">Nhà bếp</string>
+    <string name="Bed">Giường</string>
+    <string name="Closet">Tủ đồ</string>
+    <string name="Television">Tivi</string>
+    <string name="Pet">Thú cưng</string>
+    <string name="Balcony">Ban công</string>
+    <string name="Fridge">Tủ lạnh</string>
+    <string name="Washing_machine">Máy giặt</string>
+    <string name="title_activity_swiper">SwiperActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+</resources>

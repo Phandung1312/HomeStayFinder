@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/home_logo"
+            android:layout_marginTop="100dp"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:layout_marginTop="30dp"
+            android:text="Cùng tìm trọ ngay thôi nào!"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold|italic"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_sign_in_google"
+            android:drawableLeft="@drawable/ic_google"
+            android:text="ĐĂNG NHẬP BẰNG GOOGLE"
+            android:textStyle="bold"
+            style="@style/OrangeButtonStyle"
+            android:theme="@style/MyButtonTheme"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="360dp"
+            android:layout_height="50dp"/>
+        <Button
+            android:id="@+id/btn_sign_in_facebook"
+            android:drawableLeft="@drawable/ic_facebook"
+            android:text="ĐĂNG NHẬP BẰNG FACEBOOK"
+            style="@style/BlueButtonStyle"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="360dp"
+            android:layout_height="50dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/wave"
+                app:layout_constraintBottom_toTopOf="@+id/view2" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/wave_color"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

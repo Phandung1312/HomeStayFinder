@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/approved"
+        android:title="Đã duyệt"
+        app:showAsAction="always"/>
+    <item android:id="@+id/pending"
+        android:title="Chờ duyệt"
+        app:showAsAction="always"/>
+    <item android:id="@+id/appointment_schedule"
+        android:title="Lịch hẹn"
+        app:showAsAction="always"/>
+</menu>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="scheduleDialog"
+            type="com.personal.homestayfinder.ui.home.roomdetails.ScheduleDialog" />
+        <variable
+            name="viewModel"
+            type="com.personal.homestayfinder.ui.home.roomdetails.RoomDetailsViewModel" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_super_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xác nhận đặt hẹn"
+                android:textSize="20sp"
+                android:textColor="@color/text_color"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_gray" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="@dimen/padding_med"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Địa chỉ"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="@dimen/margin_small"
+                tools:text="247 Phạm Như Xương, Hòa Khánh Nam, Liên Chiểu, Đà Nẵng"
+                android:text="@{viewModel.schedule.address}"
+                android:textSize="20sp"
+                android:textColor="@color/text_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="Họ và tên"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:inputType="text"
+                style="@style/edittext_style"
+                android:onTextChanged="@{viewModel::onFullNameChanged}"
+                android:hint="Nhập tên của bạn"
+                android:layout_marginTop="@dimen/margin_super_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                style="@style/error_text_style"
+                isValidate="@{viewModel.fullNameValidate}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vui lòng nhập tên của bạn" />
+            <TextView
+                android:text="Số điện thoại"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:hint="Nhập số điện thoại của bạn"
+                style="@style/edittext_style"
+                android:onTextChanged="@{viewModel::onPhoneNumberChanged}"
+                android:layout_marginTop="@dimen/margin_super_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                style="@style/error_text_style"
+                isValidate="@{viewModel.phoneNumberValidate}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vui lòng nhập số điện thoại của bạn" />
+            <TextView
+                android:text="Ngày và giờ"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:hint="Chọn ngày và giờ"
+                android:onClick="@{() -> scheduleDialog.pickDateTime()}"
+                android:text="@{viewModel.schedule.dateTime}"
+                style="@style/date_time_picker_text_style"
+                android:layout_marginTop="@dimen/margin_super_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                style="@style/error_text_style"
+                isValidate="@{viewModel.dateTimeValidate}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vui lòng chọn ngày và giờ cho cuộc hẹn!" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:onClick="@{() -> scheduleDialog.submitSchedule()}"
+                android:layout_marginTop="@dimen/margin_med"
+                android:layout_marginStart="@dimen/margin_med"
+                android:layout_marginEnd="@dimen/margin_med"
+                android:text="Đặt hẹn"
+                style="@style/BlueButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_margin="@dimen/margin_small"
+                android:text="Hủy"
+                android:textSize="16sp"
+                android:textColor="@color/blue"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#455DF6</color>
+    <color name="orange">#D33C0D</color>
+    <color name="transparent">#80000000</color>
+    <color name="medium_orange">#FB4F18</color>
+    <color name="wave_color">#ff5500</color>
+    <color name="gray">#6F6F6F</color>
+    <color name="line_gray">#C5C5C5</color>
+    <color name="border_gray">#4E4E4E</color>
+    <color name="background_sliver">#F0F0F0</color>
+    <color name="gray_white_background">#F4F4F4</color>
+    <color name="primaryColor">#ff6c2f</color>
+    <color name="primaryLightColor">#ff9e5d</color>
+    <color name="primaryDarkColor">#c53a00</color>
+    <color name="error_color">@android:color/holo_red_light</color>
+    <color name="light_text_color">#FFFFFFFF</color>
+    <color name="text_color">#333333</color>
+    <color name="rb_text_color">#737373</color>
+    <color name="sub_title_text_color">#656565</color>
+    <color name="toolbar_text_color">#605F5F</color>
+    <color name="hint_text_color">#AFAFAF</color>
+    <color name="regular_price_color">#cbcbcb</color>
+    <color name="inactive_text_color">#8D8D8D</color>
+    <color name="background_splash_color">#FF6C2F</color>
+    <color name="text_button_color">#F12011</color>
+    <color name="red_round_button">#F12011</color>
+    <color name="background_header_color">@color/medium_orange</color>
+    <color name="icon_color_bottom_normal">@color/primaryLightColor</color>
+    <color name="icon_color_bottom_selected">@color/primaryColor</color>
+
+
+    <color name="icon_color_normal">#B7B7B7</color>
+</resources>

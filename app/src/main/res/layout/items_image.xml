@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="imageUri"
+            type="android.net.Uri" />
+    </data>
+    <FrameLayout
+        android:layout_margin="@dimen/margin_super_small"
+        android:layout_width="@dimen/medium_height"
+        android:layout_height="@dimen/medium_width">
+            <ImageView
+                android:id="@+id/iv_room"
+                android:layout_margin="@dimen/margin_super_small"
+                tools:src="@drawable/room_sample"
+                imgUrl="@{imageUri.toString()}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:src="@drawable/close"
+                android:layout_gravity="top|right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </FrameLayout>
+</layout>

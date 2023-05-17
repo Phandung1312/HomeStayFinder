@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="imageUrl"
+            type="String" />
+    </data>
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="5dp"
+        android:layout_marginBottom="@dimen/margin_super_small"
+        android:background="@drawable/orange_border_bg"
+        android:layout_width="240dp"
+        android:layout_height="150dp">
+        <ImageView
+            android:id="@+id/iv"
+            imgMessageUrl="@{imageUrl}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            tools:src="@drawable/room_sample" />
+    </androidx.cardview.widget.CardView>
+</layout>

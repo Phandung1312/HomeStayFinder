@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="title_dialog_style">
+        <item name="fontFamily">@font/app_font_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+    <style name="title_page_style">
+        <item name="fontFamily">@font/app_font_regular</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+    <style name="medium_title_text_style">
+        <item name="android:layout_marginTop">@dimen/padding</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/sub_title_text_color</item>
+    </style>
+    <style name="background_header">
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:background">@color/white</item>
+    </style>
+    <style name="body_text_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="medium_text_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_regular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="second_body_text_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#8D8D8D</item>
+        <item name="fontFamily">@font/app_font_regular</item>
+    </style>
+
+    <style name="error_text_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/error_color</item>
+        <item name="fontFamily">@font/app_font_regular</item>
+    </style>
+
+    <style name="product_name_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_bold</item>
+    </style>
+
+    <style name="h2_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_bold</item>
+    </style>
+
+    <style name="h2_highlight_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="fontFamily">@font/app_font_bold</item>
+    </style>
+
+
+    <style name="h3_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_bold</item>
+    </style>
+
+
+    <style name="high_text_style">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_bold</item>
+    </style>
+
+    <style name="regular_price_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/regular_price_color</item>
+        <item name="fontFamily">@font/app_font_regular</item>
+    </style>
+
+    <style name="product_name_detail_style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_medium</item>
+    </style>
+
+    <style name="special_price_detail_style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_medium</item>
+    </style>
+
+    <style name="special_price_hightlight_style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/primaryColor</item>
+        <item name="fontFamily">@font/app_font_medium</item>
+    </style>
+
+    <style name="regular_price_detail_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/regular_price_color</item>
+        <item name="fontFamily">@font/app_font_regular</item>
+    </style>
+
+    <style name="category_name_style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_regular</item>
+    </style>
+
+    <style name="cta_button_style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/medium_orange</item>
+        <item name="fontFamily">@font/app_font_bold</item>
+        <item name="android:drawableEnd">@drawable/baseline_navigate_next</item>
+        <item name="android:paddingStart">@dimen/padding_drawable_button</item>
+        <item name="android:paddingEnd">@dimen/padding_drawable_button</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:background">@drawable/background_cta_button</item>
+    </style>
+    <style name="orange_dialog_button_style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/medium_orange</item>
+        <item name="fontFamily">@font/app_font_bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:background">@drawable/background_cta_button</item>
+    </style>
+    <style name="button_style_normal">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="fontFamily">@font/app_font_medium</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:background">@drawable/background_button_normal</item>
+    </style>
+
+    <style name="text_button_style">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_button_color</item>
+        <item name="fontFamily">@font/app_font_bold</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+
+    <style name="edittext_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:fontFamily">@font/app_font_regular</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:textColorHint">@color/hint_text_color</item>
+        <item name="android:textColorHighlight">@color/hint_text_color</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:lineSpacingExtra">10dp</item>
+    </style>
+    <style name="date_time_picker_text_style">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:fontFamily">@font/app_font_regular</item>
+        <item name="android:textColorHint">@color/hint_text_color</item>
+        <item name="android:textColorHighlight">@color/hint_text_color</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:clickable">true</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:focusableInTouchMode">false</item>
+    </style>
+    <style name="OrangeButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/round_orange_bg</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/app_font_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="BlueButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/round_blue_bg</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/app_font_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="MyButtonTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">#1976D2</item>
+        <item name="colorAccent">#FF4081</item>
+    </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/medium_orange</item>
+    </style>
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:textColorPrimary">#222121</item>
+        <item name="android:text">normal</item>
+    </style>
+    <style name="CustomProgressBar" parent="@style/Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/medium_orange</item>
+    </style>
+    <style name="ChooseButtonStyle" parent="Widget.AppCompat.Button" >
+        <item name="android:background">@drawable/round_choose_button_bg</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/app_font_bold</item>
+        <item name="android:textColor">@color/text_button_color</item>
+    </style>
+    <style name="AddRoomToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@color/white</item>
+        <item name="android:titleTextAppearance">@style/AddRoomToolbarTitleStyle</item>
+        <item name="android:navigationIcon">@drawable/left</item>
+    </style>
+    <style name="AddRoomToolbarTitleStyle">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">@font/app_font_regular</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="RadioButtonStyle">
+        <item name="android:paddingStart">@dimen/padding_med</item>
+        <item name="android:textColorPrimary">@color/text_color</item>
+        <item name="android:buttonTint">@color/rb_text_color</item>
+    </style>
+    <style name="CheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@null</item>
+        <item name="android:buttonTint">@null</item>
+        <item name="android:textColor">@color/checkbox_color_state</item>
+        <item name="android:drawableTint">@color/checkbox_color_state</item>
+        <item name="android:drawablePadding">@dimen/padding_med</item>
+        <item name="android:paddingStart">@dimen/padding_med_lar</item>
+        <item name="android:background">@drawable/background_checkbox</item>
+    </style>
+</resources>

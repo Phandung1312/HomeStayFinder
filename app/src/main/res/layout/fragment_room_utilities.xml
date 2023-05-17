@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data class="RoomUtilitiesClass">
+        <import type="android.view.View"/>
+        <import type="com.personal.homestayfinder.data.models.Utility"/>
+        <variable
+            name="roomUtilitiesFragment"
+            type="com.personal.homestayfinder.ui.home.addroom.RoomUtilitiesFragment" />
+        <variable
+            name="viewModel"
+            type="com.personal.homestayfinder.ui.home.addroom.AddRoomViewModel" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Toolbar
+            android:id="@+id/toolbar"
+            style="@style/AddRoomToolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:text="@string/Image_information_and_utilities"
+                style="@style/AddRoomToolbarTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </Toolbar>
+        <View
+            android:id="@+id/line"
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+       <ScrollView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <LinearLayout
+               android:padding="@dimen/linear_padding"
+               android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       style="@style/medium_title_text_style"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="HÌNH ẢNH"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
+                   <TextView
+                       android:id="@+id/tv_delete_all"
+                       android:text="Xóa hết"
+                       android:textColor="@color/text_button_color"
+                       android:onClick="@{() -> roomUtilitiesFragment.deleteAllImages()}"
+                       android:visibility="@{viewModel.isVisible()? View.VISIBLE : View.GONE }"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+               </androidx.constraintlayout.widget.ConstraintLayout>
+               <LinearLayout
+                   android:layout_marginTop="@dimen/margin_small"
+                   android:orientation="vertical"
+                   android:background="@drawable/dash_border_bg"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <androidx.recyclerview.widget.RecyclerView
+                       android:id="@+id/rv_room_images"
+                       android:layout_gravity="center_horizontal"
+                       android:visibility="@{viewModel.isVisible()? View.VISIBLE : View.GONE }"
+                       android:layout_margin="@dimen/margin_small"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+                   <LinearLayout
+                       android:onClick="@{() -> roomUtilitiesFragment.openGalley()}"
+                       android:visibility="@{viewModel.isVisible()? View.GONE : View.VISIBLE }"
+                       android:layout_gravity="center_horizontal"
+                       android:layout_marginTop="@dimen/margin_small"
+                       android:layout_marginBottom="@dimen/margin_small"
+                       android:orientation="vertical"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+                       <ImageView
+                           android:layout_gravity="center_horizontal"
+                           android:src="@drawable/add_image"
+                           android:layout_width="100dp"
+                           android:layout_height="100dp"/>
+                       <TextView
+                           android:id="@+id/tv_add_images"
+                           android:layout_gravity="center_horizontal"
+                           android:text="Bấm vào đây để thêm hình ảnh"
+                           style="@style/text_button_style"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+                   </LinearLayout>
+                   <TextView
+                       android:id="@+id/tv_add_more_images"
+                       android:layout_marginBottom="@dimen/margin_small"
+                       android:layout_gravity="center_horizontal"
+                       android:onClick="@{() -> roomUtilitiesFragment.openGalley()}"
+                       android:visibility="@{viewModel.isVisible()? View.VISIBLE : View.GONE }"
+                       android:text="Bấm vào đây để chọn thêm hình ảnh"
+                       style="@style/text_button_style"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+                   <TextView
+                       android:layout_marginStart="@dimen/margin_small"
+                       android:layout_marginBottom="@dimen/margin_small"
+                       android:visibility="@{viewModel.isVisible()? View.VISIBLE : View.GONE }"
+                       android:text="Bạn cần thêm ít nhất 4 ảnh và tối đa là 20 ảnh."
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+               </LinearLayout>
+               <TextView
+                   android:text ="Vui lòng thêm ít nhất 4 tấm ảnh"
+                   isValidate="@{viewModel.imagesValidate}"
+                   style="@style/error_text_style"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
+               <androidx.appcompat.widget.AppCompatButton
+                   android:id="@+id/btn_take_a_photo"
+                   android:layout_marginTop="@dimen/margin_small"
+                   android:layout_gravity="center_horizontal"
+                   android:paddingStart="@dimen/padding_med_lar"
+                   android:paddingEnd="@dimen/padding_lar"
+                   android:drawableStart="@drawable/camera"
+                   android:text="Chụp hình"
+                   android:onClick="@{() -> roomUtilitiesFragment.openCamera()}"
+                   style="@style/ChooseButtonStyle"
+                   android:layout_width="@dimen/large_width"
+                   android:layout_height="wrap_content"/>
+               <TextView
+                   android:text="TIỆN ÍCH"
+                   style="@style/medium_title_text_style"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
+               <GridLayout
+                   android:layout_gravity="center_horizontal"
+                   android:columnCount="2"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_1"
+                       android:checked="@{viewModel.cbPrivateToiletState}"
+                       android:onCheckedChanged="@{(view,isChecked) -> viewModel.onUtilitiesCheckedChanged(Utility.PRIVATE_TOILET,@string/Private_toilet,isChecked, viewModel.cbPrivateToiletState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Private_toilet"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_2"
+                       android:checked="@{viewModel.cbParkingState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.PARKING,@string/Parking,isChecked, viewModel.cbParkingState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Parking"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_3"
+                       android:checked="@{viewModel.cbWindowState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.WINDOW,@string/Window,isChecked, viewModel.cbWindowState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Window"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_4"
+                       android:checked="@{viewModel.cbSecurityState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.SECURITY,@string/Security,isChecked, viewModel.cbSecurityState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Security"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_5"
+                       android:checked="@{viewModel.cbWifiNetworkState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.WIFI_NETWORK,@string/Wifi_network,isChecked,viewModel.cbWifiNetworkState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Wifi_network"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_6"
+                       android:checked="@{viewModel.cbFreeState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.FREE,@string/Free,isChecked, viewModel.cbFreeState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Free"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_7"
+                       android:checked="@{viewModel.cbOwnPropertyState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.OWN_PROPERTY,@string/Own_property,isChecked, viewModel.cbOwnPropertyState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Own_property"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_8"
+                       android:checked="@{viewModel.cbAirConditioningState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.AIR_CONDITIONING,@string/Air_conditioning,isChecked, viewModel.cbAirConditioningState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Air_conditioning"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_9"
+                       android:checked="@{viewModel.cbWaterHeaterState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.WATER_HEATER,@string/Water_heater,isChecked, viewModel.cbWaterHeaterState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Water_heater"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_12"
+                       android:checked="@{viewModel.cbKitchenState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.KITCHEN,@string/Kitchen,isChecked, viewModel.cbKitchenState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Kitchen"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_17"
+                       android:checked="@{viewModel.cbFridgeState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.FRIDGE,@string/Fridge,isChecked, viewModel.cbFridgeState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Fridge"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_18"
+                       android:checked="@{viewModel.cbWashingMachineState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.WASHING_MACHINE,@string/Washing_machine,isChecked, viewModel.cbWashingMachineState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Washing_machine"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_10"
+                       android:checked="@{viewModel.cbMezzanineState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.MEZZANINE,@string/Mezzanine,isChecked,viewModel.cbMezzanineState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Mezzanine"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_11"
+                       android:checked="@{viewModel.cbBedState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.BED,@string/Bed,isChecked, viewModel.cbBedState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Bed"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_13"
+                       android:checked="@{viewModel.cbClosetState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.CLOSET,@string/Closet,isChecked, viewModel.cbClosetState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Closet"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_14"
+                       android:checked="@{viewModel.cbTelevisionState}"
+                       android:onCheckedChanged="@{(view,isChecked) -> viewModel.onUtilitiesCheckedChanged(Utility.TELEVISION,@string/Television,isChecked,viewModel.cbTelevisionState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Television"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_15"
+                       android:checked="@{viewModel.cbPetState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.PET,@string/Pet,isChecked,viewModel.cbPetState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Pet"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+                   <androidx.appcompat.widget.AppCompatCheckBox
+                       android:layout_margin="@dimen/margin_super_small"
+                       android:drawableStart="@drawable/ic_16"
+                       android:checked="@{viewModel.cbBalconyState}"
+                       android:onCheckedChanged="@{(view,isChecked) ->viewModel.onUtilitiesCheckedChanged(Utility.BALCONY,@string/Balcony,isChecked,viewModel.cbBalconyState)}"
+                       style="@style/CheckBoxStyle"
+                       android:text="@string/Balcony"
+                       android:layout_width="@dimen/large_width"
+                       android:layout_height="wrap_content"/>
+               </GridLayout>
+               <TextView
+                   android:text ="Vui lòng chọn ít nhất 1 tiện ích"
+                   isValidate="@{viewModel.utilitiesValidate}"
+                   style="@style/error_text_style"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
+               <androidx.appcompat.widget.AppCompatButton
+                   android:id="@+id/btn_next"
+                   style="@style/cta_button_style"
+                   android:onClick="@{() -> roomUtilitiesFragment.goToNextScreen()}"
+                   android:text="@string/Next"
+                   android:layout_marginTop="@dimen/margin_med"
+                   android:layout_marginBottom="@dimen/margin_med"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+           </LinearLayout>
+       </ScrollView>
+    </LinearLayout>
+</layout>

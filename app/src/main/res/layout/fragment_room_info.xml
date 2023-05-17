@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data class="RoomInfoClass">
+        <import type="android.view.View"/>
+        <import type="com.personal.homestayfinder.common.Constant"/>
+        <import type="com.personal.homestayfinder.data.models.RoomType"/>
+        <import type="com.personal.homestayfinder.common.Utils"/>
+        <variable
+            name="roomInfoFragment"
+            type="com.personal.homestayfinder.ui.home.addroom.RoomInformationFragment" />
+        <variable
+            name="viewModel"
+            type="com.personal.homestayfinder.ui.home.addroom.AddRoomViewModel" />
+        <variable
+            name="isShowLoading"
+            type="Boolean" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/CustomProgressBar"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:visibility="@{isShowLoading ? View.VISIBLE : View.GONE}" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Toolbar
+                android:id="@+id/toolbar"
+                style="@style/AddRoomToolbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+                <TextView
+                    style="@style/AddRoomToolbarTitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Room_information" />
+            </Toolbar>
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_gray" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/linear_padding">
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ROOM_TYPE" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_room_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/rb_dormitory"
+                            style="@style/RadioButtonStyle"
+                            android:checked="@{viewModel.currentRoom.roomType.id == RoomType.DORMITORY}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onRoomTypeSelected(RoomType.DORMITORY,@string/Dormitory)}"
+                            android:text="@string/Dormitory" />
+
+                        <RadioButton
+                            android:id="@+id/rb_room_for_rent"
+                            style="@style/RadioButtonStyle"
+                            android:checked="@{viewModel.currentRoom.roomType.id == RoomType.ROOM_FOR_RENT}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onRoomTypeSelected(RoomType.ROOM_FOR_RENT,@string/Room_for_rent)}"
+                            android:text="@string/Room_for_rent" />
+
+                        <RadioButton
+                            android:id="@+id/rb_shared_room"
+                            style="@style/RadioButtonStyle"
+                            android:checked="@{viewModel.currentRoom.roomType.id == RoomType.SHARED_ROOM}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onRoomTypeSelected(RoomType.SHARED_ROOM,@string/Shared_room)}"
+                            android:text="@string/Shared_room" />
+
+                        <RadioButton
+                            android:id="@+id/rb_whole_house"
+                            style="@style/RadioButtonStyle"
+                            android:checked="@{viewModel.currentRoom.roomType.id == RoomType.WHOLE_HOUSE}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onRoomTypeSelected(RoomType.WHOLE_HOUSE,@string/Whole_house)}"
+                            android:text="@string/Whole_house" />
+
+                        <RadioButton
+                            android:id="@+id/rb_apartment"
+                            style="@style/RadioButtonStyle"
+                            android:checked="@{viewModel.currentRoom.roomType.id == RoomType.APARTMENT}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onRoomTypeSelected(RoomType.APARTMENT,@string/Apartment)}"
+                            android:text="@string/Apartment" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_error_room_type"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.roomTypeValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng chọn loại phòng" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/NUMBER_OF_ROOMS" />
+
+                    <EditText
+                        android:id="@+id/ed_num_of_rooms"
+                        style="@style/edittext_style"
+                        android:text="@{viewModel.currentRoom.numberOfRoom.toString()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:hint="@string/Enter_the_number_rooms_you_want_to_rent"
+                        android:inputType="number"
+                        android:onTextChanged="@{viewModel::onNumOfRoomsChanged}" />
+
+                    <TextView
+                        android:id="@+id/tv_error_num_of_rooms"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.numOfRoomsValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng nhập số lượng phòng" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/CAPACITY" />
+
+                    <EditText
+                        android:id="@+id/ed_capacity"
+                        style="@style/edittext_style"
+                        android:text="@{viewModel.currentRoom.capacity.toString()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:hint="@string/Enter_the_number_of_people_that_can_stay"
+                        android:inputType="number"
+                        android:onTextChanged="@{viewModel::onCapacityChanged}" />
+
+                    <TextView
+                        android:id="@+id/tv_error_capacity"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.capacityValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng nhập sức chứa của phòng" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/Gender" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/rb_all"
+                            style="@style/RadioButtonStyle"
+                            android:checked="@{viewModel.currentRoom.gender == Constant.ALL_GENDER}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onGenderSelected(Constant.ALL_GENDER)}"
+                            android:text="@string/All" />
+
+                        <RadioButton
+                            android:id="@+id/rb_male"
+                            style="@style/RadioButtonStyle"
+                            android:checked="@{viewModel.currentRoom.gender == Constant.MALE}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onGenderSelected(Constant.MALE)}"
+                            android:text="@string/Male" />
+
+                        <RadioButton
+                            android:id="@+id/rb_female"
+                            style="@style/RadioButtonStyle"
+                            android:checked="@{viewModel.currentRoom.gender == Constant.FEMALE}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{() -> viewModel.onGenderSelected(Constant.FEMALE)}"
+                            android:text="@string/Female" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_error_gender"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.genderValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng chọn giới tính có thể ở" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/ACREAGE" />
+
+                    <EditText
+                        android:id="@+id/ed_acreage"
+                        style="@style/edittext_style"
+                        android:text="@{viewModel.currentRoom.acreage}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:digits="0123456789,"
+                        android:hint="@string/Enter_room_acreage"
+                        android:inputType="number"
+                        android:onTextChanged="@{viewModel::onAcreageChanged}" />
+
+                    <TextView
+                        android:id="@+id/tv_error_acreage"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.acreageValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng nhập diện tích" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/RENTAL_PRICE" />
+
+                    <EditText
+                        android:id="@+id/ed_rental_price"
+                        style="@style/edittext_style"
+                        android:text="@{viewModel.currentRoom.rentalPrice.toString()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:hint="@string/Enter_rental_price"
+                        android:inputType="number"
+                        android:onTextChanged="@{viewModel::onRentalPriceChanged}" />
+
+                    <TextView
+                        android:id="@+id/tv_error_rental_price"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.rentalPriceValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng nhập giá cho thuê" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/DEPOSIT_PRICE" />
+
+                    <EditText
+                        android:id="@+id/ed_deposit_price"
+                        style="@style/edittext_style"
+                        android:text="@{viewModel.currentRoom.depositPrice.toString()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:hint="@string/Enter_deposit_price"
+                        android:inputType="number"
+                        android:onTextChanged="@{viewModel::onDepositPriceChanged}" />
+
+                    <TextView
+                        android:id="@+id/tv_error_deposit_price"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.depositPriceValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng nhập giá cọc" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/ELECTRIC_PRICE" />
+
+                    <EditText
+                        android:id="@+id/ed_electric_price"
+                        style="@style/edittext_style"
+                        android:text="@{viewModel.currentRoom.electricPrice.toString()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:hint="@string/Enter_the_amout"
+                        android:inputType="number"
+                        android:onTextChanged="@{viewModel::onElectricPriceChanged}" />
+
+                    <TextView
+                        android:id="@+id/tv_error_electric_price"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.electricPriceValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng nhập tiền điện" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/WATER_PRICE" />
+
+                    <EditText
+                        android:id="@+id/ed_water_price"
+                        style="@style/edittext_style"
+                        android:text="@{viewModel.currentRoom.waterPrice.toString()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:hint="@string/Enter_the_amout"
+                        android:inputType="number"
+                        android:onTextChanged="@{viewModel::onWaterPriceChanged}" />
+
+                    <TextView
+                        android:id="@+id/tv_error_water_price"
+                        style="@style/error_text_style"
+                        isValidate="@{viewModel.waterPriceValidate}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vui lòng nhập tiền nước" />
+
+                    <TextView
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="@string/INTERNET" />
+
+                    <EditText
+                        android:id="@+id/ed_internet_price"
+                        style="@style/edittext_style"
+                        android:text="@{viewModel.currentRoom.internetPrice.toString()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:hint="@string/Enter_the_amout"
+                        android:inputType="number"
+                        android:onTextChanged="@{viewModel::onInternetPriceChanged}" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_next"
+                        style="@style/cta_button_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_med"
+                        android:layout_marginBottom="@dimen/margin_med"
+                        android:onClick="@{() -> roomInfoFragment.goToNextScreen() }"
+                        android:text="@string/Next" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="message"
+            type="com.personal.homestayfinder.data.models.Message" />
+        <variable
+            name="avatarUrl"
+            type="String" />
+        <variable
+            name="messageImageClickListener"
+            type="com.personal.homestayfinder.ui.chat.message.MessageImageClickListener" />
+        <variable
+            name="roomScheduledClickListener"
+            type="com.personal.homestayfinder.ui.chat.message.RoomScheduledClickListener" />
+        <variable
+            name="item"
+            type="com.personal.homestayfinder.data.models.RoomListItem" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/gray_white_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="@dimen/margin_small"
+                android:id="@+id/tv_time"
+                tools:text="19:30"
+                android:text="@{message.time}"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    imgUrl="@{avatarUrl}"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_marginEnd="@dimen/margin_super_small"
+                    android:src="@drawable/ic_account_gray"
+                    />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_message_images"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        urlsList="@{message.imagesUrl}"
+                        messageImageClickListener="@{messageImageClickListener}"
+                        android:layout_marginBottom="@dimen/margin_super_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <include
+                        android:visibility="@{item == null ? View.GONE : View.VISIBLE}"
+                        android:id="@+id/room_scheduled"
+                        android:onClick="@{() -> roomScheduledClickListener.onClick(item)}"
+                        android:layout_marginBottom="@dimen/margin_small"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        layout="@layout/items_room"
+                        app:item="@{item}"/>
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:textAlignment="textStart"
+                        android:maxWidth="@dimen/max_width_message"
+                        android:visibility="@{TextUtils.isEmpty(message.content) ? View.GONE : View.VISIBLE }"
+                        android:text="@{message.content}"
+                        android:padding="@dimen/padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        tools:text="Content"
+                        android:background="@drawable/background_message_left"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

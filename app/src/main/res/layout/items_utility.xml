@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_margin="@dimen/margin_small"
+        android:orientation="vertical"
+        android:layout_width="70dp"
+        android:layout_height="80dp">
+        <ImageView
+            android:id="@+id/iv_utility"
+            android:layout_gravity="center_horizontal"
+            tools:src="@drawable/ic_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_utility_name"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_super_small"
+            tools:text="Máy lạnh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</layout>

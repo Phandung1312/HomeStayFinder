@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.personal.homestayfinder.ui.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_roomInformationFragment"
+            app:destination="@id/roomInformationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_roomDetailsFragment"
+            app:destination="@id/roomDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.personal.homestayfinder.ui.chat.message.MessageFragment"
+        android:label="MessageFragment"
+        tools:layout="@layout/fragment_message">
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_messageFragment_to_roomDetailsFragment"
+            app:destination="@id/roomDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userChatsFragment"
+        android:name="com.personal.homestayfinder.ui.chat.userchats.UserChatsFragment"
+        android:label="UserChatsFragment"
+        tools:layout="@layout/fragment_user_chats">
+        <action
+            android:id="@+id/action_userChatsFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.personal.homestayfinder.ui.account.AccountFragment"
+        android:label="AccountFragment"
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_accountFragment_to_fragmentRoomsPosted"
+            app:destination="@id/fragmentRoomsPosted" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomInformationFragment"
+        android:name="com.personal.homestayfinder.ui.home.addroom.RoomInformationFragment"
+        android:label="RoomInformationFragment"
+        tools:layout="@layout/fragment_room_info">
+        <action
+            android:id="@+id/action_roomInformationFragment_to_roomAddressFragment"
+            app:destination="@id/roomAddressFragment" />
+        <argument
+            android:name="roomId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomAddressFragment"
+        android:name="com.personal.homestayfinder.ui.home.addroom.RoomAddressFragment"
+        android:label="RoomAddressFragment"
+        tools:layout="@layout/fragment_room_address">
+        <action
+            android:id="@+id/action_roomAddressFragment_to_roomUtilitiesFragment"
+            app:destination="@id/roomUtilitiesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomUtilitiesFragment"
+        android:name="com.personal.homestayfinder.ui.home.addroom.RoomUtilitiesFragment"
+        android:label="RoomUtilitiesFragment"
+        tools:layout="@layout/fragment_room_utilities">
+        <action
+            android:id="@+id/action_roomUtilitiesFragment_to_roomConfirmationFragment"
+            app:destination="@id/roomConfirmationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomConfirmationFragment"
+        android:name="com.personal.homestayfinder.ui.home.addroom.RoomConfirmationFragment"
+        android:label="RoomConfirmationFragment"
+        tools:layout="@layout/fragment_room_confirmation"/>
+    <fragment
+        android:id="@+id/roomDetailsFragment"
+        android:name="com.personal.homestayfinder.ui.home.roomdetails.RoomDetailsFragment"
+        android:label="RoomDetailsFragment"
+        tools:layout="@layout/fragment_room_details">
+        <argument
+            android:name="roomId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_roomDetailsFragment_to_messageFragment"
+            app:destination="@id/messageFragment" />
+        <action
+            android:id="@+id/action_roomDetailsFragment_to_roomInformationFragment"
+            app:destination="@id/roomInformationFragment" />
+        <action
+            android:id="@+id/action_roomDetailsFragment_to_fragmentRoomsPosted"
+            app:destination="@id/fragmentRoomsPosted" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.personal.homestayfinder.ui.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite">
+        <action
+            android:id="@+id/action_favoriteFragment_to_roomDetailsFragment"
+            app:destination="@id/roomDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentRoomsPosted"
+        android:name="com.personal.homestayfinder.ui.account.roomsposted.RoomsPostedFragment"
+        android:label="RoomsPostedFragment"
+        tools:layout="@layout/fragment_rooms_posted">
+        <argument
+            android:name="roomMasterId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_roomsPostedFragment_to_roomDetailsFragment"
+            app:destination="@id/roomDetailsFragment" />
+    </fragment>
+</navigation>

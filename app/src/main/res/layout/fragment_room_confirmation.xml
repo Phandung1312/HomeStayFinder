@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data class="RoomConfirmationClass">
+        <import type="android.view.View"/>
+        <variable
+            name="roomConfirmationFragment"
+            type="com.personal.homestayfinder.ui.home.addroom.RoomConfirmationFragment" />
+        <variable
+            name="viewModel"
+            type="com.personal.homestayfinder.ui.home.addroom.AddRoomViewModel" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Toolbar
+            android:id="@+id/toolbar"
+            style="@style/AddRoomToolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:text="Xác nhận"
+                style="@style/AddRoomToolbarTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </Toolbar>
+        <View
+            android:id="@+id/line"
+            android:background="@color/line_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:padding="@dimen/linear_padding"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="SỐ ĐIỆN THOẠI"
+                style="@style/medium_title_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_marginTop="@dimen/margin_super_small"
+                android:id="@+id/ed_num_of_rooms"
+                android:text="@{viewModel.currentRoom.phoneNumber}"
+                android:onTextChanged="@{viewModel::onPhoneNumberChanged}"
+                style="@style/edittext_style"
+                android:inputType="phone"
+                android:hint="Nhập số điện thoại"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text ="Vui lòng nhập số điện thoại"
+                isValidate="@{viewModel.phoneNumberValidate}"
+                style="@style/error_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="TIÊU ĐỀ BÀI ĐĂNG"
+                android:layout_marginTop="@dimen/margin_small"
+                style="@style/medium_title_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/ed_title"
+                android:layout_marginTop="@dimen/margin_super_small"
+                android:text="@{viewModel.currentRoom.title}"
+                android:onTextChanged="@{viewModel::onTitleChanged}"
+                style="@style/edittext_style"
+                android:inputType="text"
+                android:hint="Nhập tên bài đăng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text ="Vui lòng nhập tên bài đăng"
+                isValidate="@{viewModel.titleValidate}"
+                style="@style/error_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="NỘI DUNG MÔ TẢ"
+                android:layout_marginTop="@dimen/margin_small"
+                style="@style/medium_title_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/ed_content"
+                android:layout_marginTop="@dimen/margin_super_small"
+                android:text="@{viewModel.currentRoom.content}"
+                android:onTextChanged="@{viewModel::onContentChanged}"
+                style="@style/edittext_style"
+                android:inputType="text"
+                android:hint="Môi trường sống,tình hình an ninh..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text ="Vui lòng nhập mô tả phòng"
+                isValidate="@{viewModel.contentValidate}"
+                style="@style/error_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="THỜI GIAN MỞ CỬA"
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:id="@+id/ed_open_time"
+                        style="@style/date_time_picker_text_style"
+                        android:onClick="@{() -> roomConfirmationFragment.setOpenTime()}"
+                        android:text="@{viewModel.currentRoom.openTime}"
+                        android:hint="Chọn giờ mở cửa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text ="Vui lòng chọn giờ mở cửa"
+                        isValidate="@{viewModel.openTimeValidate}"
+                        style="@style/error_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="THỜI GIAN ĐÓNG CỬA"
+                        style="@style/medium_title_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:id="@+id/ed_close_time"
+                        style="@style/date_time_picker_text_style"
+                        android:onClick="@{() -> roomConfirmationFragment.setCloseTime()}"
+                        android:text="@{viewModel.currentRoom.closeTime}"
+                        android:hint="Chọn giờ đóng cửa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:text ="Vui lòng chọn giờ đóng cửa"
+                        isValidate="@{viewModel.closeTimeValidate}"
+                        style="@style/error_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <FrameLayout
+                android:layout_marginTop="@dimen/margin_med"
+                android:layout_marginBottom="@dimen/margin_med"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/layout_loading"
+                    android:visibility="gone"
+                    android:background="@drawable/round_orange_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/loading_button_size">
+                    <com.airbnb.lottie.LottieAnimationView
+                        app:lottie_rawRes="@raw/button_loading_white"
+                        android:id="@+id/loadingView"
+                        app:lottie_autoPlay="false"
+                        app:lottie_loop="true"
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/loading_button_size"
+                        android:layout_height="@dimen/loading_button_size"/>
+                </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_add_room"
+                    style="@style/OrangeButtonStyle"
+                    android:visibility="@{viewModel.isNewRoom()? View.VISIBLE : View.GONE}"
+                    android:onClick="@{() ->roomConfirmationFragment.addRoom()}"
+                    android:drawableEnd="@drawable/add"
+                    android:paddingStart="@dimen/padding_drawable_button"
+                    android:paddingEnd="@dimen/padding_drawable_button"
+                    android:text="Đăng phòng"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_update_room"
+                    style="@style/OrangeButtonStyle"
+                    android:visibility="@{viewModel.isNewRoom()? View.GONE : View.VISIBLE}"
+                    android:onClick="@{() ->roomConfirmationFragment.updateRoom()}"
+                    android:drawableEnd="@drawable/ic_update"
+                    android:paddingStart="@dimen/padding_drawable_button"
+                    android:paddingEnd="@dimen/padding_drawable_button"
+                    android:text="Cập nhật"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

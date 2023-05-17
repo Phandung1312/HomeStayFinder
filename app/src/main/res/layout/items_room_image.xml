@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="url"
+            type="String" />
+    </data>
+    <FrameLayout
+        android:id="@+id/layout_main"
+        android:paddingStart="@dimen/padding"
+        android:paddingTop="@dimen/padding"
+        android:paddingEnd="@dimen/padding"
+        android:layout_width="200dp"
+        android:layout_height="170dp">
+        <ImageView
+            android:layout_width="match_parent"
+            imgUrl="@{url}"
+            android:layout_height="match_parent"
+            tools:src="@drawable/room_sample" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_background"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:background="@color/black">
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_num_of_images"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="4+"
+            android:textSize="55sp"
+            android:textColor="@color/white"
+            android:layout_gravity="center" />
+    </FrameLayout>
+</layout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="user"
+            type="com.personal.homestayfinder.data.models.User" />
+        <variable
+            name="message"
+            type="com.personal.homestayfinder.data.models.Message" />
+    </data>
+        <LinearLayout
+            android:id="@+id/layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_avatar"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    imgUrl="@{user.imgUrl}"
+                    android:src="@drawable/ic_account_gray"
+                    />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_active_status"
+                    android:visibility="@{user.online? View.VISIBLE : View.GONE}"
+                    android:layout_gravity="right|bottom"
+                    android:src="@drawable/ic_active_status"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+            </FrameLayout>
+            <LinearLayout
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_super_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{user.name}"
+                        tools:text="Name"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_color" />
+                <LinearLayout
+                    android:layout_marginTop="@dimen/margin_super_small"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        tools:text="Tôi:"
+                        android:text="@{!user.userId.equals(message.sender) ? `Tôi: ` : ``}"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:maxWidth="210dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{message.imagesUrl != null ? `Đã gửi ` + message.imagesUrl.size+` ảnh` : message.content}"
+                        tools:text="Hello"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        dateString ="@{message.time}"
+                        tools:text=" . 1 giờ"
+                        android:textSize="14sp"
+                        android:textStyle="normal"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+</layout>
