@@ -12,6 +12,7 @@
     </data>
         <LinearLayout
             android:id="@+id/layout_main"
+            android:layout_marginBottom="@dimen/margin_super_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

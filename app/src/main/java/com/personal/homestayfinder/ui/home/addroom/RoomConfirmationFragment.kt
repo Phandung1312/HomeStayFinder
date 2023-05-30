@@ -16,13 +16,13 @@ import java.util.Locale
 class RoomConfirmationFragment : BaseFragment<RoomConfirmationClass>(RoomConfirmationClass::inflate) {
     private val addRoomViewModel : AddRoomViewModel by activityViewModels()
     override fun initView() {
-        dataBinding.apply {
+        binding.apply {
             roomConfirmationFragment = this@RoomConfirmationFragment
             viewModel = addRoomViewModel
         }
     }
     override fun initListeners() {
-        dataBinding.toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
@@ -52,43 +52,49 @@ class RoomConfirmationFragment : BaseFragment<RoomConfirmationClass>(RoomConfirm
             addRoomViewModel.setCloseTime(timeString)
         }
     }
+    fun cancel(){
+        var count = 0
+        while(count < 3){
+            findNavController().popBackStack()
+            count++
+        }
+        findNavController().popBackStack()
+    }
     fun addRoom(){
         if(addRoomViewModel.isValidateConfirmation()){
             //Make Loading Animation Visible
-            dataBinding.btnAddRoom.visibility = View.GONE
-            dataBinding.layoutLoading.visibility = View.VISIBLE
-            dataBinding.loadingView.playAnimation()
+            binding.btnAddRoom.visibility = View.GONE
+            binding.layoutLoading.visibility = View.VISIBLE
+            binding.loadingView.playAnimation()
             addRoomViewModel.addRoom(currentUser.uid)
             addRoomViewModel.isCompleteSuccess.observe(viewLifecycleOwner){ isSuccess ->
                 if(isSuccess) Toast.makeText(activity?.applicationContext,"Thêm phòng thành công",Toast.LENGTH_SHORT).show()
                 else Toast.makeText(activity?.applicationContext,"Đã có lỗi xảy ra",Toast.LENGTH_SHORT).show()
-                dataBinding.loadingView.pauseAnimation()
-                dataBinding.layoutLoading.visibility = View.GONE
-                dataBinding.btnAddRoom.visibility = View.VISIBLE
+                binding.loadingView.pauseAnimation()
+                binding.layoutLoading.visibility = View.GONE
+                binding.btnAddRoom.visibility = View.VISIBLE
                 //Clear data before returning to HomeFragment
                 requireActivity().viewModelStore.clear()
-                findNavController().popBackStack(R.id.homeFragment, false)
-                findNavController().navigate(R.id.homeFragment)
+                cancel()
             }
         }
 
     }
     fun updateRoom(){
         if(addRoomViewModel.isValidateConfirmation()){
-            dataBinding.btnUpdateRoom.visibility = View.GONE
-            dataBinding.layoutLoading.visibility = View.VISIBLE
-            dataBinding.loadingView.playAnimation()
+            binding.btnUpdateRoom.visibility = View.GONE
+            binding.layoutLoading.visibility = View.VISIBLE
+            binding.loadingView.playAnimation()
             addRoomViewModel.updateRoom()
             addRoomViewModel.isCompleteSuccess.observe(viewLifecycleOwner){ isSuccess ->
                 if(isSuccess) Toast.makeText(activity?.applicationContext,"Phòng đã được cập nhật",Toast.LENGTH_SHORT).show()
                 else Toast.makeText(activity?.applicationContext,"Đã có lỗi xảy ra",Toast.LENGTH_SHORT).show()
-                dataBinding.loadingView.pauseAnimation()
-                dataBinding.layoutLoading.visibility = View.GONE
-                dataBinding.btnUpdateRoom.visibility = View.VISIBLE
+                binding.loadingView.pauseAnimation()
+                binding.layoutLoading.visibility = View.GONE
+                binding.btnUpdateRoom.visibility = View.VISIBLE
                 //Clear data before returning to HomeFragment
                 requireActivity().viewModelStore.clear()
-                findNavController().popBackStack(R.id.homeFragment, false)
-                findNavController().navigate(R.id.homeFragment)
+                cancel()
             }
         }
     }

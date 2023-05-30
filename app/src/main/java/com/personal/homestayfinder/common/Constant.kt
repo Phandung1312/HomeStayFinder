@@ -7,6 +7,8 @@ object Constant {
     const val ROOM_IMAGE ="room_images"
     const val MESSAGE_IMAGE ="message_images"
     const val FAVORITE = "favorites"
+    const val BANNER = "banners"
+    const val SEARCH_TREND = "search_trends"
     //error string
     const val NETWORK_ERROR = "Đã xảy ra lỗi liên quan tới mạng. Vui kiểm tra và thử lại!"
     const val AUTH_ERROR = "Lỗi xác thực người dùng. Hãy thử lại sau!"
@@ -18,4 +20,7 @@ object Constant {
     const val ALL_GENDER = 1
     const val MALE = 2
     const val FEMALE = 3
+
+    const val MIN_PRICE = 500000
+    const val MAX_PRICE = 15000000
 }

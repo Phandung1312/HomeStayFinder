@@ -1,53 +1,117 @@
 package com.personal.homestayfinder.ui.home
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.models.SlideModel
 import com.personal.homestayfinder.R
-import com.personal.homestayfinder.adapters.RoomAdapter
+import com.personal.homestayfinder.base.adapters.RoomAdapter
+import com.personal.homestayfinder.base.adapters.SearchTrendAdapter
+import com.personal.homestayfinder.base.adapters.SearchTrendClickListener
+import com.personal.homestayfinder.base.dialogs.AddressDialog
 import com.personal.homestayfinder.base.fragment.BaseFragment
 import com.personal.homestayfinder.common.ItemRVClickListener
+import com.personal.homestayfinder.common.ItemRoomClickListener
+import com.personal.homestayfinder.data.models.Location
+import com.personal.homestayfinder.data.models.Room
+import com.personal.homestayfinder.data.models.RoomListItem
 import com.personal.homestayfinder.databinding.HomeClass
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<HomeClass>(HomeClass::inflate),ItemRVClickListener  {
+class HomeFragment : BaseFragment<HomeClass>(HomeClass::inflate),ItemRoomClickListener  {
     private val homeViewModel : HomeViewModel by viewModels()
+    private lateinit var citiesList : List<Location>
+    private lateinit var currentArea : Location
+    private var isFirstLoading = true
+    override fun onStart() {
+        super.onStart()
+        if(isFirstLoading){
+            showFragmentLoading(true)
+            isFirstLoading = false
+        }
+    }
     override fun initView() {
         showBottomNavView()
-        val list = ArrayList<SlideModel>()
-        list.add(SlideModel("https://th.bing.com/th/id/R.d1ad1c3f5250d1fd8d3d44aecb83de8f?rik=ERCA8rp%2bCBn62g&pid=ImgRaw&r=0",ScaleTypes.CENTER_CROP))
-        list.add(SlideModel("https://thietkenhadepmoi.com/wp-content/uploads/2020/11/phong-tro-dep-2023.jpg",ScaleTypes.CENTER_CROP))
-        list.add(SlideModel("https://th.bing.com/th/id/R.be2901e0f62568d7787a21c07540b595?rik=fu2gkbWNlqzBEQ&riu=http%3a%2f%2fsunshinegroup.vn%2fwp-content%2fuploads%2f2019%2f12%2fthoi-dai-can-ho-1-1024x652.jpg&ehk=4nvlkcqV%2b3kKpTJWeOJaze4G8LxOznxnBZZxQevKbDo%3d&risl=&pid=ImgRaw&r=0",ScaleTypes.CENTER_CROP))
-        dataBinding.imageSlider.setImageList(list,ScaleTypes.CENTER_CROP)
-        dataBinding.rvRooms.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.rvRooms.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.rvSearchTrends.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.homeFragment = this@HomeFragment
     }
 
     override fun initListeners() {
-        dataBinding.ivAddRoom.setOnClickListener {
+        binding.ivAddRoom.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRoomInformationFragment(null))
         }
+        registerObserverFragmentLoadingEvent(homeViewModel, viewLifecycleOwner)
     }
 
     override fun initData() {
-        homeViewModel.getAllRoom().observe(viewLifecycleOwner){ roomsList ->
-            if(roomsList.isNotEmpty()){
-                val adapter = RoomAdapter(
-                    roomsList.toMutableList(),
-                    this
-                )
-                dataBinding.rvRooms.adapter = adapter
+        homeViewModel.getAllBanners().observe(viewLifecycleOwner){ slideModelsList ->
+           binding.imageSlider.setImageList(slideModelsList,ScaleTypes.CENTER_CROP)
+        }
+        getCurrentArea().observe(viewLifecycleOwner){
+            currentArea = it
+            binding.areaName = it.name
+            homeViewModel.getSearchTrends(it.id).observe(viewLifecycleOwner){ searchTrendsList ->
+                if(searchTrendsList.isNotEmpty()){
+                    val searchTrendAdapter = SearchTrendAdapter(searchTrendsList,
+                    object : SearchTrendClickListener{
+                        override fun onClick(districtName: String) {
+                            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchRoomFragment(districtName))
+                        }
+
+                    })
+                    binding.rvSearchTrends.adapter = searchTrendAdapter
+                }
+
             }
+            homeViewModel.getRoomsByCityId(it.id).observe(viewLifecycleOwner){ roomsList ->
+                binding.isEmptyRooms = roomsList.isEmpty()
+                if(roomsList.isNotEmpty()){
+                    val roomAdapter = RoomAdapter(
+                        R.layout.items_room,
+                        roomsList.toMutableList(),
+                        this
+                    )
+                    binding.rvRooms.adapter = roomAdapter
+                }
+            }
+        }
+        homeViewModel.getAllCity().observe(viewLifecycleOwner){
+            citiesList = it
         }
     }
 
-    override fun onClick(view: View,position : Int, item: Any) {
-        val roomId = item as String
-        showFragmentLoading(true)
-        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRoomDetailsFragment(roomId))
 
+    fun onAreaChanged(){
+        val addressDialog = AddressDialog(
+            requireContext(),
+            citiesList,
+            currentArea,
+            fragmentCallback = object : AddressDialog.AddressCallBack{
+                override fun onLocationSelected(location: Location) {
+                    updateArea(location)
+                    binding.areaName = location.name
+                }
+            },
+            "Chuyển đổi khu vực tìm kiếm",
+            "Chuyển",
+            "Hủy"
+        )
+        addressDialog.show()
+    }
+    fun goToSearchRoomScreen(){
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchRoomFragment(null))
+    }
+    override fun onPause() {
+        super.onPause()
+        showFragmentLoading(false)
+    }
+
+    override fun onRoomClick(room: RoomListItem) {
+        val roomId = room.id!!
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRoomDetailsFragment(roomId))
     }
 }

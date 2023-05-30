@@ -13,8 +13,8 @@
             name="messageImageClickListener"
             type="com.personal.homestayfinder.ui.chat.message.MessageImageClickListener" />
         <variable
-            name="roomScheduledClickListener"
-            type="com.personal.homestayfinder.ui.chat.message.RoomScheduledClickListener" />
+            name="itemClick"
+            type="com.personal.homestayfinder.common.ItemRoomClickListener" />
         <variable
             name="item"
             type="com.personal.homestayfinder.data.models.RoomListItem" />
@@ -64,12 +64,12 @@
                     <include
                         android:visibility="@{item == null ? View.GONE : View.VISIBLE}"
                         android:id="@+id/room_scheduled"
-                        android:onClick="@{() -> roomScheduledClickListener.onClick(item)}"
                         android:layout_marginBottom="@dimen/margin_small"
                         android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         layout="@layout/items_room"
-                        app:item="@{item}"/>
+                        app:item="@{item}"
+                        app:itemClick = "@{itemClick}"/>
                     <TextView
                         android:id="@+id/tv_content"
                         android:textAlignment="textStart"

@@ -1,4 +1,4 @@
-package com.personal.homestayfinder.ui.home.roomdetails
+package com.personal.homestayfinder.base.dialogs
 
 import android.app.DatePickerDialog
 import android.app.Dialog
@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import com.personal.homestayfinder.databinding.DialogScheduleBinding
+import com.personal.homestayfinder.ui.home.roomdetails.RoomDetailsViewModel
 import java.util.Calendar
 
 
@@ -27,12 +28,11 @@ class ScheduleDialog(
         binding.viewModel = roomDetailsViewModel
         binding.scheduleDialog = this@ScheduleDialog
         binding.lifecycleOwner  = lifecycle
-        binding.tvCancel.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             roomDetailsViewModel.resetSchedule()
             dismiss()
         }
     }
-
     override fun onStart() {
         super.onStart()
         val width = (context.resources.displayMetrics.widthPixels * 0.95).toInt()

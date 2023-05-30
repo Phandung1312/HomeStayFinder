@@ -53,11 +53,12 @@ class LoginActivity : BaseActivity() {
             showNotifyDialog(
                 message = "Vì lí do bảo mật nên chức năng này không còn hoạt động.",
                 title = "Thông báo",
-                "Ok"
+                "OK"
             )
         }
     }
     private fun signIn() {
+        showScreenLoading(true)
         val signInIntent: Intent = gsc.signInIntent
         mStartForResult.launch(signInIntent)
     }
@@ -76,6 +77,9 @@ class LoginActivity : BaseActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+        }
+        else{
+            showScreenLoading(false)
         }
     }
 

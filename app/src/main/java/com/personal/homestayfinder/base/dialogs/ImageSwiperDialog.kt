@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.personal.homestayfinder.R
-import com.personal.homestayfinder.adapters.ImageSwiperAdapter
+import com.personal.homestayfinder.base.adapters.ImageSwiperAdapter
 import com.personal.homestayfinder.databinding.DialogImageSwiperBinding
 
 class ImageSwiperDialog constructor(

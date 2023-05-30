@@ -16,6 +16,13 @@ class AddressLocalService @Inject constructor(
     suspend fun getAllCity() : List<CityEntity>{
         return cityDao.getAll()
     }
+    suspend fun getFirstCity() : CityEntity{
+        return cityDao.getFirstCity()
+    }
+
+    suspend fun getCityById(cityId: Int) : CityEntity{
+        return cityDao.getCityById(cityId)
+    }
     suspend fun getDistrictsByCityId(cityId : Int) : List<DistrictEntity>{
         return districtDao.getDistrictsByCityId(cityId)
     }

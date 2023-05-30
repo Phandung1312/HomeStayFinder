@@ -11,18 +11,23 @@ import dagger.hilt.android.AndroidEntryPoint
 class RoomAddressFragment : BaseFragment<RoomAddressClass>(RoomAddressClass::inflate) {
     private val viewModel : AddRoomViewModel by activityViewModels()
     override fun initView() {
-        dataBinding.toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
-        dataBinding.viewModel = viewModel
-        dataBinding.roomAddressFragment = this@RoomAddressFragment
+        binding.viewModel = viewModel
+        binding.roomAddressFragment = this@RoomAddressFragment
     }
 
     override fun initListeners() {
+        registerAllExceptionEvent(viewModel,viewLifecycleOwner)
     }
 
     override fun initData() {
-        viewModel.getAllCity()
+        viewModel.getAllCity(getCurrentArea().value?.id)
+    }
+    fun cancel(){
+        findNavController().popBackStack()
+        findNavController().popBackStack()
     }
     fun goToNextScreen(){
         if(viewModel.isValidateAddress()){

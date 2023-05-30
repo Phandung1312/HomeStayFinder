@@ -26,4 +26,8 @@ data class Room(
     var openTime : String? = null,
     var closeTime : String? = null,
     var dateSubmitted : String? = null
-)
+){
+    fun toAddress() : String{
+        return "$apartmentNumber $streetNames, $ward, $district, $city"
+    }
+}

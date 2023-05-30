@@ -14,7 +14,6 @@ class LoginViewModel @Inject constructor(private val userRepository: UserReposit
     var errorUpdate = MutableLiveData<Boolean>()
     private set
     fun updateUser(newUser : User){
-        showScreenLoading(true)
         parentJob = viewModelScope.launch {
             try {
                 userRepository.updateUser(newUser)

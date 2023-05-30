@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="searchTrend"
+            type="com.personal.homestayfinder.data.models.SearchTrend" />
+        <variable
+            name="itemClick"
+            type="com.personal.homestayfinder.base.adapters.SearchTrendClickListener" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:onClick="@{() -> itemClick.onClick(searchTrend.districtName)}"
+        android:layout_margin="@dimen/margin_super_small"
+        app:cardCornerRadius="10dp"
+        android:layout_width="105dp"
+        android:layout_height="105dp">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                imgUrl="@{searchTrend.imageUrl}"
+                tools:src = "@drawable/room_sample"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_background"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+                <ImageView
+                    android:src="@drawable/gradient_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_marginBottom="@dimen/margin_super_small"
+                android:text="@{searchTrend.districtName}"
+                tools:text="Liên Chiểu"
+                android:textColor="@color/white"
+                android:fontFamily="@font/app_font_regular"
+                android:textSize="13sp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

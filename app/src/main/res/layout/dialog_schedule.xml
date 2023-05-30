@@ -4,7 +4,7 @@
     <data>
         <variable
             name="scheduleDialog"
-            type="com.personal.homestayfinder.ui.home.roomdetails.ScheduleDialog" />
+            type="com.personal.homestayfinder.base.dialogs.ScheduleDialog" />
         <variable
             name="viewModel"
             type="com.personal.homestayfinder.ui.home.roomdetails.RoomDetailsViewModel" />
@@ -45,7 +45,7 @@
                 android:layout_marginTop="@dimen/margin_small"
                 tools:text="247 Phạm Như Xương, Hòa Khánh Nam, Liên Chiểu, Đà Nẵng"
                 android:text="@{viewModel.schedule.address}"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/text_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -117,9 +117,10 @@
                 style="@style/BlueButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_cancel"
-                android:layout_margin="@dimen/margin_small"
+            <androidx.appcompat.widget.AppCompatButton
+                android:background="@drawable/transparent_bg"
+                android:textAllCaps="false"
+                android:id="@+id/btn_cancel"
                 android:text="Hủy"
                 android:textSize="16sp"
                 android:textColor="@color/blue"

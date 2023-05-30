@@ -1,4 +1,4 @@
-package com.personal.homestayfinder.adapters
+package com.personal.homestayfinder.base.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -20,14 +20,14 @@ class FavoriteRoomAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val roomItem = roomsList[holder.adapterPosition]
+        val roomItem = roomsList[holder.bindingAdapterPosition]
         holder.binding.apply {
             item = roomItem
             layoutMain.setOnClickListener {
                 layoutClick.onClick(it,position,roomItem.id!!)
             }
             ivbFavorite.setOnClickListener {
-                ivbClick.onClick(it,holder.adapterPosition ,roomItem.id!!)
+                ivbClick.onClick(it,holder.bindingAdapterPosition ,roomItem.id!!)
             }
             executePendingBindings()
         }

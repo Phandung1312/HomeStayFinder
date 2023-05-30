@@ -1,7 +1,6 @@
 package com.personal.homestayfinder.ui.home.addroom
 
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.personal.homestayfinder.R
@@ -15,14 +14,14 @@ class RoomInformationFragment : BaseFragment<RoomInfoClass>(RoomInfoClass::infla
     private val args : RoomInformationFragmentArgs by navArgs()
     override fun initView() {
         hideBottomNavView()
-        dataBinding.apply {
+        binding.apply {
             viewModel = addRoomViewModel
             roomInfoFragment = this@RoomInformationFragment
         }
     }
 
     override fun initListeners() {
-        dataBinding.toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
         registerObserverSmallLoadingEvent(addRoomViewModel, viewLifecycleOwner)

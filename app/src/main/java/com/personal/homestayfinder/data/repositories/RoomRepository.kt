@@ -1,19 +1,21 @@
 package com.personal.homestayfinder.data.repositories
 
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toUri
-import androidx.lifecycle.asFlow
-import androidx.lifecycle.liveData
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.StorageReference
-import com.personal.homestayfinder.common.Constant
+import com.personal.homestayfinder.common.Constant.ALL_GENDER
 import com.personal.homestayfinder.common.Constant.CHAT
-import com.personal.homestayfinder.common.Constant.FAVORITE
 import com.personal.homestayfinder.common.Constant.ROOM
 import com.personal.homestayfinder.common.Constant.ROOM_IMAGE
+import com.personal.homestayfinder.common.Constant.SEARCH_TREND
 import com.personal.homestayfinder.data.models.Message
 import com.personal.homestayfinder.data.models.Room
+import com.personal.homestayfinder.data.models.SearchFilter
+import com.personal.homestayfinder.data.models.SearchTrend
 import com.personal.homestayfinder.data.models.toRoomListItem
 import com.personal.homestayfinder.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -28,6 +30,7 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Named
 
+
 class RoomRepository @Inject constructor(
     @Named(ROOM_IMAGE)
     private val roomImages : StorageReference,
@@ -35,8 +38,8 @@ class RoomRepository @Inject constructor(
     private val chat: DatabaseReference,
     @Named(ROOM)
     private val room : CollectionReference,
-    @Named(FAVORITE)
-    private val favorite : CollectionReference,
+    @Named(SEARCH_TREND)
+    private val searchTrend : CollectionReference,
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher
 ) {
@@ -54,6 +57,13 @@ class RoomRepository @Inject constructor(
         newRoom.imagesList = urlsDeferred.awaitAll().toMutableList()
         room.document(newRoom.id!!).set(newRoom).await()
     }
+    suspend fun getSearchTrends(cityId: Int) = flow{
+        Log.d("cityId","$cityId")
+        val result = searchTrend.whereEqualTo("cityId", cityId)
+            .orderBy("numOfSearches", Query.Direction.DESCENDING)
+           .limit(6).get().await().toObjects(SearchTrend::class.java)
+        emit(result)
+    }.flowOn(dispatcher)
     suspend fun updateRoom(newRoom : Room): Unit = withContext(dispatcher){
         val urlsDeferred: List<Deferred<String>> =  newRoom.imagesList.map { image ->
             async {
@@ -77,6 +87,50 @@ class RoomRepository @Inject constructor(
         val result = room.get().await().toObjects(Room::class.java).map { it.toRoomListItem() }
         emit(result)
     }.flowOn(dispatcher)
+    suspend fun getRoomsByCityId(cityId : Int) = flow{
+        val result = room.whereEqualTo("city.id", cityId).get().await().toObjects(Room::class.java).map { it.toRoomListItem() }
+        emit(result)
+    }
+    suspend fun searchRoom(searchAddress : String,searchFilter: SearchFilter?, cityId : Int) = flow{
+        val result : MutableList<Room> = arrayListOf()
+        val queryResult = room.whereEqualTo("city.id", cityId).get().await().toObjects(Room::class.java)
+        val addressParts = searchAddress.split(",")
+        val district = addressParts.getOrNull(0)?.trim()?.uppercase()
+        val ward = addressParts.getOrNull(1)?.trim()?.uppercase()
+        val streetNames = addressParts.getOrNull(2)?.trim()?.uppercase()
+        queryResult.forEach outer@ {room ->
+            if(district != null){
+                if(room.district?.name?.uppercase()?.contains(district) == false) return@outer
+            }
+            if(ward != null){
+
+                if(room.ward?.name?.uppercase()?.contains(ward) == false) return@outer
+            }
+            if(streetNames != null){
+                if(room.streetNames?.uppercase()?.contains(streetNames) == false) return@outer
+            }
+            searchFilter?.let {filter ->
+                //search rentalPrice
+                if(room.rentalPrice!! < filter.minPrice || room.rentalPrice!! > filter.maxPrice) return@outer
+                //search RoomType
+                if(filter.roomType != null){
+                    if(room.roomType?.id != filter.roomType!!.id) return@outer
+                }
+                //search Capacity
+                if(room.capacity!! < filter.capacity!!) return@outer
+                //search Gender
+                if(filter.gender != ALL_GENDER && room.gender!! != filter.gender && room.gender != ALL_GENDER) return@outer
+                //search Utilities
+                val tempList = room.utilitiesList
+               filter.utilitiesList.forEach{
+                    val matchingUtility = tempList.find { utility -> utility.id == it.id} ?: return@outer
+                    tempList.remove(matchingUtility)
+                }
+            }
+            result.add(room)
+        }
+        emit(result.map { it.toRoomListItem() })
+    }.flowOn(dispatcher)
     suspend fun getRoomById(roomId : String) =flow{
         val result = room.document(roomId).get().await().toObject(Room::class.java)
         emit(result)
@@ -90,12 +144,6 @@ class RoomRepository @Inject constructor(
                 }
                 roomImages.child(roomId).delete()
             }.await()
-        if (favorite.get().await().size() > 0) {
-            val favoritesQuerySnapshot = favorite.whereEqualTo("roomId", roomId).get().await()
-            for (favoriteDocument in favoritesQuerySnapshot.documents) {
-                favoriteDocument.reference.delete().await()
-            }
-        }
         room.document(roomId).delete().await()
         emit(true)
     }.flowOn(dispatcher)

@@ -5,11 +5,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.personal.homestayfinder.common.Constant.BANNER
 import com.personal.homestayfinder.common.Constant.CHAT
 import com.personal.homestayfinder.common.Constant.FAVORITE
 import com.personal.homestayfinder.common.Constant.MESSAGE_IMAGE
 import com.personal.homestayfinder.common.Constant.ROOM
 import com.personal.homestayfinder.common.Constant.ROOM_IMAGE
+import com.personal.homestayfinder.common.Constant.SEARCH_TREND
 import com.personal.homestayfinder.common.Constant.USER
 import dagger.Module
 import dagger.Provides
@@ -57,5 +59,12 @@ class FirebaseModule {
     fun providesMessageImages(db : FirebaseStorage) = db.reference.child(MESSAGE_IMAGE)
     @Provides
     @Named(FAVORITE)
-    fun providesFavorite(db : FirebaseFirestore) = db.collection(FAVORITE)
+    fun providesFavorites(db : FirebaseFirestore) = db.collection(FAVORITE)
+    @Provides
+    @Named(BANNER)
+    fun providesBanners(db : FirebaseFirestore) = db.collection(BANNER)
+
+    @Provides
+    @Named(SEARCH_TREND)
+    fun providesSearchTrends(db : FirebaseFirestore) = db.collection(SEARCH_TREND)
 }

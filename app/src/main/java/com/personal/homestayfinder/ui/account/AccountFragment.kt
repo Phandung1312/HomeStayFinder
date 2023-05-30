@@ -12,7 +12,9 @@ import com.personal.homestayfinder.common.Constant
 import com.personal.homestayfinder.data.models.User
 import com.personal.homestayfinder.databinding.AccountClass
 import com.personal.homestayfinder.activities.login.LoginActivity
+import com.personal.homestayfinder.base.dialogs.AddressDialog
 import com.personal.homestayfinder.base.dialogs.ConfirmDialog
+import com.personal.homestayfinder.data.models.Location
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -25,16 +27,19 @@ class AccountFragment : BaseFragment<AccountClass>(AccountClass::inflate) {
     @Inject
     lateinit var auth: FirebaseAuth
     private val viewModel by viewModels<AccountViewModel>()
+    private lateinit var citiesList : List<Location>
+    private lateinit var currentArea : Location
     override fun initView() {
         showBottomNavView()
+        binding.accountFragment = this@AccountFragment
+        getCurrentArea().observe(viewLifecycleOwner){
+            binding.tvLocation.text = it.name
+            currentArea = it
+        }
     }
 
     override fun initListeners() {
-        dataBinding.ivbRoomPosted.setOnClickListener {
-            findNavController().navigate(AccountFragmentDirections
-                .actionAccountFragmentToFragmentRoomsPosted(currentUser.uid))
-        }
-        dataBinding.layoutLogout.setOnClickListener {
+        binding.layoutLogout.setOnClickListener {
             showConfirmMessage(
                 title = R.string.confirm_note,
                 message = R.string.confirm_logout,
@@ -56,9 +61,13 @@ class AccountFragment : BaseFragment<AccountClass>(AccountClass::inflate) {
         registerAllExceptionEvent(viewModel,viewLifecycleOwner)
     }
 
+    fun goToRoomsPostedScreen(){
+        findNavController().navigate(AccountFragmentDirections
+            .actionAccountFragmentToFragmentRoomsPosted(currentUser.uid))
+    }
     override fun initData() {
         // Get local user info
-        dataBinding.user = User(
+        binding.user = User(
             currentUser.uid,
             currentUser.email,
             currentUser.displayName,
@@ -66,9 +75,29 @@ class AccountFragment : BaseFragment<AccountClass>(AccountClass::inflate) {
         )
         // Update user info
         viewModel.getUserById(currentUser.uid).observe(viewLifecycleOwner){ user ->
-            dataBinding.user = user
-            dataBinding.executePendingBindings()
+            binding.user = user
+            binding.executePendingBindings()
         }
+        viewModel.getAllCity().observe(viewLifecycleOwner){
+            citiesList = it
+        }
+    }
+    fun onAreaChanged(){
+            val addressDialog = AddressDialog(
+                requireContext(),
+                citiesList,
+                currentArea,
+                fragmentCallback = object : AddressDialog.AddressCallBack{
+                    override fun onLocationSelected(location: Location) {
+                        updateArea(location)
+                        binding.tvLocation.text = location.name
+                    }
+                },
+                "Chuyển đổi khu vực tìm kiếm",
+                "Chuyển",
+                "Hủy"
+            )
+            addressDialog.show()
     }
     private fun logout() {
         lifecycleScope.launch {

@@ -1,4 +1,4 @@
-package com.personal.homestayfinder.adapters
+package com.personal.homestayfinder.base.adapters
 
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.personal.homestayfinder.BR
+import com.personal.homestayfinder.common.ItemRoomClickListener
 import com.personal.homestayfinder.data.models.Message
 import com.personal.homestayfinder.data.models.User
 import com.personal.homestayfinder.databinding.ItemsMessageLeftBinding
@@ -22,7 +23,7 @@ class MessageAdapter(
     private val receiver : User,
     private val itemChangeListener : ItemChangeListener,
     private val messageImageClickListener: MessageImageClickListener,
-    private val roomScheduledClickListener: RoomScheduledClickListener
+    private val itemRoomClickListener : ItemRoomClickListener
 ) : FirebaseRecyclerAdapter<Message, MessageAdapter.ViewHolder>(options) {
     companion object{
         const val SENDER_TYPE = 0
@@ -59,7 +60,7 @@ class MessageAdapter(
             else{
                 setVariable(BR.isSeen, null)
             }
-            setVariable(BR.roomScheduledClickListener, roomScheduledClickListener)
+            setVariable(BR.itemClick, itemRoomClickListener)
             setVariable(BR.item, model.roomScheduled)
             executePendingBindings()
         }

@@ -5,6 +5,9 @@
     <data class="AccountClass">
         <import type="android.view.View"/>
         <variable
+            name="accountFragment"
+            type="com.personal.homestayfinder.ui.account.AccountFragment" />
+        <variable
             name="user"
             type="com.personal.homestayfinder.data.models.User" />
         <variable
@@ -17,8 +20,8 @@
         <ProgressBar
             android:id="@+id/progressBar"
             style="@style/CustomProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/progressBar_size"
+            android:layout_height="@dimen/progressBar_size"
             android:visibility="@{isShowLoading ? View.VISIBLE : View.GONE}"
             android:layout_marginTop="60dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,12 +72,15 @@
                         tools:text="Phan Dũng" />
 
                     <TextView
+                        android:id="@+id/tv_location"
+                        android:onClick="@{() -> accountFragment.onAreaChanged()}"
                         style="@style/body_text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@{user.gmail}"
-                        tools:text="Phandung13122002@gmail.com" />
+                        android:drawableEnd="@drawable/ic_arrow_drop"
+                        android:drawablePadding="@dimen/padding"
+                        android:layout_marginTop="@dimen/margin_small"
+                        tools:text="Đà Nẵng" />
                 </LinearLayout>
 
                 <FrameLayout
@@ -105,6 +111,7 @@
                 android:background="@color/line_gray" />
 
             <LinearLayout
+                android:onClick="@{() -> accountFragment.goToRoomsPostedScreen()}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -118,9 +125,7 @@
                     android:layout_weight="1"
                     android:text="Phòng đã đăng" />
 
-                <ImageButton
-                    android:id="@+id/ivb_room_posted"
-                    android:background="@color/white"
+                <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:scaleType="centerCrop"

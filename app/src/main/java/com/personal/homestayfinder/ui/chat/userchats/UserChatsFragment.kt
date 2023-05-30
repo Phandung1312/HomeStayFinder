@@ -4,7 +4,7 @@ package com.personal.homestayfinder.ui.chat.userchats
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.personal.homestayfinder.adapters.UserAdapter
+import com.personal.homestayfinder.base.adapters.UserAdapter
 import com.personal.homestayfinder.base.fragment.BaseFragment
 import com.personal.homestayfinder.common.ItemRVClickListener
 import com.personal.homestayfinder.data.models.User
@@ -36,7 +36,7 @@ class UserChatsFragment : BaseFragment<UserChatsClass>(UserChatsClass::inflate) 
         viewModel.getListIdUsers(currentUser.uid).observe(viewLifecycleOwner){ idUsers ->
             if(idUsers.isNotEmpty()){
                 viewModel.getListUserChats(idUsers).observe(viewLifecycleOwner){ users ->
-                    dataBinding.layoutEmpty.visibility = View.GONE
+                    binding.layoutEmpty.visibility = View.GONE
                     val adapter = UserAdapter(
                         users,
                         itemRVClickListener,
@@ -44,11 +44,11 @@ class UserChatsFragment : BaseFragment<UserChatsClass>(UserChatsClass::inflate) 
                         viewLifecycleOwner,
                         currentUser.uid
                     )
-                    dataBinding.rvChats.adapter = adapter
+                    binding.rvChats.adapter = adapter
                 }
             }
             else{
-                dataBinding.layoutEmpty.visibility = View.VISIBLE
+                binding.layoutEmpty.visibility = View.VISIBLE
             }
         }
     }

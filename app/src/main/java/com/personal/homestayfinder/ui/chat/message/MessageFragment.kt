@@ -8,6 +8,7 @@ import android.graphics.Rect
 import android.net.Uri
 import android.provider.Settings
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,10 +25,11 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.personal.homestayfinder.R
-import com.personal.homestayfinder.adapters.ImageAdapter
-import com.personal.homestayfinder.adapters.MessageAdapter
+import com.personal.homestayfinder.base.adapters.ImageAdapter
+import com.personal.homestayfinder.base.adapters.MessageAdapter
 import com.personal.homestayfinder.base.dialogs.ImageMessageDialog
 import com.personal.homestayfinder.base.fragment.BaseFragment
+import com.personal.homestayfinder.common.ItemRoomClickListener
 import com.personal.homestayfinder.data.models.Message
 import com.personal.homestayfinder.data.models.RoomListItem
 import com.personal.homestayfinder.data.models.toUser
@@ -40,7 +42,7 @@ class MessageFragment : BaseFragment<MessageClass>(MessageClass::inflate) {
     private val args : MessageFragmentArgs by navArgs()
     private lateinit var itemChangeListener : ItemChangeListener
     private lateinit var messageImageClickListener: MessageImageClickListener
-    private lateinit var roomScheduledClickListener : RoomScheduledClickListener
+    private lateinit var itemRoomClickListener : ItemRoomClickListener
     private lateinit var urisList : MutableList<Uri>
     private lateinit var messageAdapter: MessageAdapter
     private lateinit var imageAdapter : ImageAdapter
@@ -48,12 +50,7 @@ class MessageFragment : BaseFragment<MessageClass>(MessageClass::inflate) {
         hideBottomNavView()
         urisList = ArrayList()
         imageAdapter = ImageAdapter(messageViewModel, urisList)
-        imageAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
-            override fun onChanged() {
-                dataBinding.rvMessageImages.visibility = if(imageAdapter.itemCount > 0) View.VISIBLE else View.GONE
-            }
-        })
-        dataBinding.apply {
+        binding.apply {
             messageFragment = this@MessageFragment
             viewModel  = messageViewModel
             rvMessageImages.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -105,7 +102,12 @@ class MessageFragment : BaseFragment<MessageClass>(MessageClass::inflate) {
             }.show()
     }
     override fun initListeners() {
-        dataBinding.toolbar.setNavigationOnClickListener {
+        imageAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+            override fun onChanged() {
+                binding.rvMessageImages.visibility = if(imageAdapter.itemCount > 0) View.VISIBLE else View.GONE
+            }
+        })
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
         itemChangeListener = object : ItemChangeListener{
@@ -115,7 +117,7 @@ class MessageFragment : BaseFragment<MessageClass>(MessageClass::inflate) {
             }
 
             override fun onScrollRecyclerView(position: Int) {
-                dataBinding.rvMessages.scrollToPosition(position - 1)
+                binding.rvMessages.scrollToPosition(position - 1)
             }
 
         }
@@ -125,13 +127,21 @@ class MessageFragment : BaseFragment<MessageClass>(MessageClass::inflate) {
                 dialog.show()
             }
         }
-        roomScheduledClickListener = object : RoomScheduledClickListener {
-            override fun onClick(roomScheduled: RoomListItem) {
+        itemRoomClickListener = object : ItemRoomClickListener {
+            override fun onRoomClick(room: RoomListItem) {
                 findNavController().navigate(MessageFragmentDirections
-                    .actionMessageFragmentToRoomDetailsFragment(roomScheduled.id!!))
+                    .actionMessageFragmentToRoomDetailsFragment(room.id!!))
             }
-
         }
+        binding.edInputMessage.setOnEditorActionListener{ _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                sendMessage()
+                true
+            } else {
+                false
+            }
+        }
+        registerObserverSmallLoadingEvent(messageViewModel, viewLifecycleOwner)
     }
 
     override fun initData() {
@@ -151,8 +161,8 @@ class MessageFragment : BaseFragment<MessageClass>(MessageClass::inflate) {
         messageViewModel.receiver.value!!,
         itemChangeListener,
         messageImageClickListener,
-        roomScheduledClickListener)
-        dataBinding.rvMessages.adapter = messageAdapter
+        itemRoomClickListener)
+        binding.rvMessages.adapter = messageAdapter
         messageAdapter.startListening()
         scrollRvWhenUserType()
     }
@@ -166,15 +176,15 @@ class MessageFragment : BaseFragment<MessageClass>(MessageClass::inflate) {
                 val heightDiff = editText.rootView?.height?.minus((r.bottom - r.top))
                 if (heightDiff != null) {
                     if (heightDiff > 100) {
-                        dataBinding.rvMessages.scrollToPosition(messageAdapter.itemCount - 1)
+                        binding.rvMessages.scrollToPosition(messageAdapter.itemCount - 1)
                     }
                 }
             }
     }
     fun sendMessage(){
-        if(dataBinding.edInputMessage.text.toString().isNotBlank() or urisList.isNotEmpty()){
+        if(binding.edInputMessage.text.toString().isNotBlank() or urisList.isNotEmpty()){
             messageViewModel.sendMessage(currentUser.uid)
-            dataBinding.edInputMessage.setText("")
+            binding.edInputMessage.setText("")
             urisList.clear()
             imageAdapter.notifyDataSetChanged()
         }

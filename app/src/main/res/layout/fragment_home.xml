@@ -3,7 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data class="HomeClass">
-
+        <import type="android.view.View"/>
+        <variable
+            name="areaName"
+            type="String" />
+        <variable
+            name="homeFragment"
+            type="com.personal.homestayfinder.ui.home.HomeFragment" />
+        <variable
+            name="isEmptyRooms"
+            type="Boolean" />
     </data>
     <LinearLayout
         android:orientation="vertical"
@@ -15,25 +24,37 @@
             android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/searchView"
-                android:enabled="false"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:onClick="@{() -> homeFragment.goToSearchRoomScreen()}"
+                android:background="@drawable/searchview_background"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="5dp"
-                android:drawableTint="@color/gray"
-                android:paddingStart="10dp"
-                android:hint="Tìm kiếm phòng ưng ý thôi nào!"
-                android:textColor="@color/gray"
-                android:textSize="15sp"
-                android:fontFamily="@font/app_font_regular"
-                android:background="@drawable/searchview_background"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="42dp"/>
+                android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_area"
+                    android:onClick="@{() -> homeFragment.onAreaChanged()}"
+                    android:paddingStart="@dimen/padding"
+                    android:paddingEnd="@dimen/padding"
+                    android:drawableStart="@drawable/ic_address_16px"
+                    tools:text="DN"
+                    areaName="@{areaName}"
+                    android:background="@drawable/round_silver_bg"
+                    android:textColor="@color/medium_orange"
+                    android:textSize="13sp"
+                    android:layout_width="60dp"
+                    android:layout_height="35dp"/>
+                <TextView
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:text="Tìm kiếm phòng ưng ý thôi nào!"
+                    android:textSize="13sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
             <ImageView
                 android:id="@+id/iv_add_room"
                 android:src="@drawable/add_room"
@@ -66,6 +87,25 @@
                         app:iss_placeholder="@drawable/place_holder"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/margin_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:text="Xu hướng tìm kiếm"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/app_font_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_search_trends"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_super_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
                     android:layout_marginTop="10dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
@@ -81,8 +121,16 @@
                         android:textSize="20sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+                    <TextView
+                        android:visibility="@{isEmptyRooms == true ? View.VISIBLE : View.GONE}"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Không tìm  thấy bài đăng ở khu vực này"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_rooms"
+                        android:visibility="@{isEmptyRooms == true ? View.GONE : View.VISIBLE}"
                         android:layout_gravity="center_horizontal"
                         android:nestedScrollingEnabled = "true"
                         android:layout_marginTop="5dp"

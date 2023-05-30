@@ -214,10 +214,23 @@ class AddRoomViewModel @Inject constructor(
     private var _apartmentNumberValidate = MutableLiveData<Boolean?>()
     val apartmentNumberValidate : LiveData<Boolean?> get() = _apartmentNumberValidate
 
-    fun getAllCity() {
+    fun getAllCity(cityId : Int?) {
         parentJob = viewModelScope.launch(handler) {
             val cityEntities = addressRepository.getAllCity()
-            _cities.postValue(cityEntities.map { it.toLocation() })
+            _cities.value = (cityEntities.map { it.toLocation() })
+            if(_currentRoom.value?.city == null){
+                val room = _currentRoom.value
+                if(cityId != null){
+                    room?.city = _cities.value?.find { it.id == cityId }
+                }
+                else{
+                    room?.city = _cities.value?.get(0)
+                }
+                _currentRoom.value = room
+                _cityValidate.postValue(true)
+                val districtEntities = addressRepository.getDistrictsByCityId(cityId = currentRoom.value!!.city!!.id)
+                _districts.postValue(districtEntities.map { it.toLocation() })
+            }
         }
     }
     fun onCitySelected(location : Any){

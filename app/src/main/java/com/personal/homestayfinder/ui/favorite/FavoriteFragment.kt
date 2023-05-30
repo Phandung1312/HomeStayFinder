@@ -5,7 +5,7 @@ import android.os.Looper
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.personal.homestayfinder.adapters.FavoriteRoomAdapter
+import com.personal.homestayfinder.base.adapters.FavoriteRoomAdapter
 import com.personal.homestayfinder.base.fragment.BaseFragment
 import com.personal.homestayfinder.common.ItemRVClickListener
 import com.personal.homestayfinder.data.models.RoomListItem
@@ -37,7 +37,7 @@ class FavoriteFragment : BaseFragment<FavoriteClass>(FavoriteClass::inflate) {
                     favoriteRoomsList.removeAt(position)
                     adapter.notifyItemRemoved(position)
                    Handler(Looper.getMainLooper()).post {
-                        dataBinding.layoutEmpty.visibility = if(favoriteRoomsList.isEmpty()) View.VISIBLE else View.GONE
+                        binding.layoutEmpty.visibility = if(favoriteRoomsList.isEmpty()) View.VISIBLE else View.GONE
                     }
                 }
             }
@@ -45,7 +45,7 @@ class FavoriteFragment : BaseFragment<FavoriteClass>(FavoriteClass::inflate) {
         }
         favoriteRoomsList  = arrayListOf()
         adapter = FavoriteRoomAdapter(favoriteRoomsList, layoutClick, ivbClick)
-        dataBinding.rvFavoriteRooms.adapter = adapter
+        binding.rvFavoriteRooms.adapter = adapter
     }
 
     override fun initListeners() {
@@ -59,11 +59,11 @@ class FavoriteFragment : BaseFragment<FavoriteClass>(FavoriteClass::inflate) {
         favoriteViewModel.favoriteRooms.observe(viewLifecycleOwner){ favoriteRooms ->
             favoriteRoomsList.clear()
             if(favoriteRooms.isNotEmpty()){
-                dataBinding.layoutEmpty.visibility = View.GONE
+                binding.layoutEmpty.visibility = View.GONE
                 favoriteRoomsList.addAll(favoriteRooms)
             }
             else{
-                dataBinding.layoutEmpty.visibility = View.VISIBLE
+                binding.layoutEmpty.visibility = View.VISIBLE
             }
             adapter.notifyDataSetChanged()
         }

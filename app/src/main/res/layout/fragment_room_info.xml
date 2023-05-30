@@ -25,8 +25,8 @@
             android:id="@+id/progressBar"
             style="@style/CustomProgressBar"
             android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/progressBar_size"
+            android:layout_height="@dimen/progressBar_size"
             android:layout_marginTop="55dp"
             android:visibility="@{isShowLoading ? View.VISIBLE : View.GONE}" />
 
@@ -41,7 +41,6 @@
                 style="@style/AddRoomToolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize">
-
                 <TextView
                     style="@style/AddRoomToolbarTitleStyle"
                     android:layout_width="wrap_content"

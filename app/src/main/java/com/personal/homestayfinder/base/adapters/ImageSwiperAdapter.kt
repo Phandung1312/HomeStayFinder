@@ -1,4 +1,4 @@
-package com.personal.homestayfinder.adapters
+package com.personal.homestayfinder.base.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

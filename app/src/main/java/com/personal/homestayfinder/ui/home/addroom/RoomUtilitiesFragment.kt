@@ -23,7 +23,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
 import com.personal.homestayfinder.R
-import com.personal.homestayfinder.adapters.ImageAdapter
+import com.personal.homestayfinder.base.adapters.ImageAdapter
 import com.personal.homestayfinder.base.fragment.BaseFragment
 import com.personal.homestayfinder.databinding.RoomUtilitiesClass
 import java.io.IOException
@@ -33,7 +33,7 @@ class RoomUtilitiesFragment : BaseFragment<RoomUtilitiesClass>(RoomUtilitiesClas
     private lateinit var adapter : ImageAdapter
     private lateinit var urisList : MutableList<Uri>
     override fun initView() {
-        dataBinding.apply {
+        binding.apply {
             roomUtilitiesFragment = this@RoomUtilitiesFragment
             viewModel = addRoomViewModel
         }
@@ -45,19 +45,27 @@ class RoomUtilitiesFragment : BaseFragment<RoomUtilitiesClass>(RoomUtilitiesClas
             }
         })
         val layoutManager = GridLayoutManager(requireContext(), 3)
-        dataBinding.rvRoomImages.layoutManager = layoutManager
-        dataBinding.rvRoomImages.adapter = adapter
+        binding.rvRoomImages.layoutManager = layoutManager
+        binding.rvRoomImages.adapter = adapter
         adapter.updateList()
     }
 
     override fun initListeners() {
-        dataBinding.toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
 
     override fun initData() {
 
+    }
+    fun cancel(){
+        var count = 0
+        while(count < 2){
+            findNavController().popBackStack()
+            count++
+        }
+        findNavController().popBackStack()
     }
     fun openGalley(){
         Dexter.withContext(activity).withPermission(

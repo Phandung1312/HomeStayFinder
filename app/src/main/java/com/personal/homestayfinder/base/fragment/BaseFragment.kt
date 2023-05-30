@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthException
@@ -21,20 +22,21 @@ import com.personal.homestayfinder.base.dialogs.ConfirmDialog
 import com.personal.homestayfinder.base.viewmodel.BaseViewModel
 import com.personal.homestayfinder.common.Constant
 import com.personal.homestayfinder.common.EventObserver
+import com.personal.homestayfinder.data.models.Location
 
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 abstract class BaseFragment<VB : ViewDataBinding>(private val inflate: Inflate<VB>) : Fragment() {
-    private var _dataBinding: VB? = null
-    val dataBinding get() = _dataBinding!!
+    private var _binding: VB? = null
+    val binding get() = _binding!!
     lateinit var currentUser: FirebaseUser
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _dataBinding = inflate.invoke(inflater, container, false)
-        dataBinding.lifecycleOwner = viewLifecycleOwner
+        _binding = inflate.invoke(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         val auth = Firebase.auth
         auth.currentUser?.let {
             currentUser = it
@@ -43,12 +45,20 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val inflate: Inflate<V
         }
         initView()
         initListeners()
-        return dataBinding.root
+        initData()
+        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initData()
+    fun getCurrentArea(): LiveData<Location> {
+        val activity = requireActivity() as MainActivity
+        return activity.currentArea
+    }
+
+    fun updateArea(newArea: Location) {
+        val activity = requireActivity()
+        if (activity is MainActivity) {
+            activity.updateSelectedArea(newArea)
+        }
     }
 
     abstract fun initView()
@@ -58,15 +68,15 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val inflate: Inflate<V
         findNavController().navigate(actionId)
     }
 
-    open fun showFragmentLoading(isShow: Boolean){
+    open fun showFragmentLoading(isShow: Boolean) {
         val activity = requireActivity()
-        if(activity is MainActivity){
+        if (activity is MainActivity) {
             activity.showWhiteScreenLoading(isShow)
         }
     }
 
     open fun showSmallLoading(isShow: Boolean) {
-        dataBinding.run {
+        binding.run {
             setVariable(BR.isShowLoading, isShow)
             executePendingBindings()
         }
@@ -122,6 +132,25 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val inflate: Inflate<V
         }
     }
 
+    protected fun showConfirmMessage(
+        title: String,
+        message: String,
+        positiveTitle: String,
+        negativeTitle: String,
+        callback: ConfirmDialog.ConfirmCallback
+    ) {
+        val activity = requireActivity()
+        if (activity is BaseActivity) {
+            activity.showConfirmDialog(
+                title,
+                message,
+                positiveTitle,
+                negativeTitle,
+                callback
+            )
+        }
+    }
+
     protected fun showErrorMessage(message: String) {
         val activity = requireActivity()
         if (activity is BaseActivity) {
@@ -147,7 +176,7 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val inflate: Inflate<V
         viewModel: BaseViewModel,
         viewLifecycleOwner: LifecycleOwner
     ) {
-        viewModel.isFragmentLoading.observe(viewLifecycleOwner, EventObserver{
+        viewModel.isFragmentLoading.observe(viewLifecycleOwner, EventObserver {
             showFragmentLoading(it)
         })
     }
@@ -233,8 +262,9 @@ abstract class BaseFragment<VB : ViewDataBinding>(private val inflate: Inflate<V
             showScreenLoading(isShow)
         })
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        _dataBinding = null
+        _binding = null
     }
 }

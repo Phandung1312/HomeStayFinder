@@ -27,11 +27,15 @@ class MessageViewModel @Inject constructor(
 
 
     fun getReceiverInfo(userId : String){
-        viewModelScope.launch(handler) {
+        showSmallLoading(true)
+        parentJob = viewModelScope.launch(handler) {
             chatRepository.getReceiverInfo(userId).collect{
                 receiver.postValue(it)
+                showSmallLoading(false)
+
             }
         }
+        registerJobFinish()
     }
     fun sendMessage(senderId : String) {
         viewModelScope.launch(handler) {

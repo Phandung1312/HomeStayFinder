@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,8 +17,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.personal.homestayfinder.R
 import com.personal.homestayfinder.data.models.Location
-import com.personal.homestayfinder.adapters.LocationAdapter
-import com.personal.homestayfinder.adapters.MessageImageAdapter
+import com.personal.homestayfinder.base.adapters.LocationAdapter
+import com.personal.homestayfinder.base.adapters.MessageImageAdapter
+import com.personal.homestayfinder.data.models.RoomType
 import com.personal.homestayfinder.ui.chat.message.MessageImageClickListener
 import java.time.Duration
 import java.time.LocalDateTime
@@ -72,18 +74,15 @@ object BindingAdapters {
     }
     @JvmStatic
     @BindingAdapter("currentLocation")
-    fun setItemView(view : AutoCompleteTextView,currentLocation : Location?){
+    fun setItemLocationView(view : AutoCompleteTextView,currentLocation : Location?){
         if (currentLocation == null){
             view.text = null
         }
     }
     @JvmStatic
-    @BindingAdapter("onItemSelected")
-    fun setOnItemSelected(view : AutoCompleteTextView,onItemSelected : (Location) -> Unit){
-        view.setOnItemClickListener { parent, _, position, _ ->
-            val item = parent.getItemAtPosition(position)
-            onItemSelected.invoke(item as Location)
-        }
+    @BindingAdapter("currentRoomType")
+    fun setItemRoomTypeView(view : AutoCompleteTextView,typeName: String?){
+        view.setText(typeName)
     }
     @JvmStatic
     @BindingAdapter("isValidate")
@@ -121,17 +120,48 @@ object BindingAdapters {
     }
     @JvmStatic
     @BindingAdapter("price")
-    fun setPriceText(textView : TextView, price : Long?){
+    fun setPriceText(textView: TextView, price: Long?) {
         price?.let {
             val formatterPrice = when {
                 it >= 1000000000 -> "${it / 1000000000} tỉ"
-                it >= 1000000 -> "${it / 1000000} triệu"
+                it >= 1000000 -> {
+                    val million = it / 1000000
+                    val thousand = (it % 1000000) / 1000
+                    if (thousand > 0) {
+                        "$million triệu $thousand ngàn"
+                    } else {
+                        "$million triệu"
+                    }
+                }
                 else -> "${it / 1000}k"
             }
             textView.text = formatterPrice
             return
         }
         textView.text = "Không có"
+    }
+    @JvmStatic
+    @BindingAdapter("searchPrice")
+    fun setSearchPriceText(textView: TextView, price: Long?){
+        price?.let {
+            val formatterPrice = when {
+                it == Long.MAX_VALUE -> "15 triệu+"
+                it >= 1000000000 -> "${it / 1000000000} tỉ"
+                it >= 1000000 -> {
+                    val million = it / 1000000
+                    val thousand = (it % 1000000) / 1000
+                    if (thousand > 0) {
+                        "$million triệu $thousand ngàn"
+                    } else {
+                        "$million triệu"
+                    }
+                }
+                else -> "${it / 1000}k"
+            }
+            textView.text = formatterPrice
+            return
+        }
+        textView.text = "0"
     }
     @JvmStatic
     @BindingAdapter("acreage")
@@ -192,6 +222,30 @@ object BindingAdapters {
                 " . $dayOfWeek"
             }
             textView.text= text
+        }
+    }
+    @JvmStatic
+    @BindingAdapter("address")
+    fun setAddressText(textView: TextView, address : String?){
+        address?.let {
+            val colorText = "<font color='#333333'>$it</font>" +
+                    "<font color='#455DF6'>. Chỉ đường</font>"
+            textView.text = Html.fromHtml(colorText, Html.FROM_HTML_MODE_LEGACY)
+        }
+    }
+    @JvmStatic
+    @BindingAdapter("areaName")
+    fun setAbbreviatedAreaText(appCompatButton: AppCompatButton, areaName : String?){
+        areaName?.let {
+            val words = it.split(" ")
+            val initials = StringBuilder()
+
+            for (word in words) {
+                if (word.isNotEmpty()) {
+                    initials.append(word[0])
+                }
+            }
+            appCompatButton.text = initials.toString().uppercase()
         }
     }
 }
