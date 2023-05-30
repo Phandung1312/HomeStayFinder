@@ -60,7 +60,7 @@ class ChatRepository @Inject constructor(
                 this.trySend(users).isSuccess
             }
             else{
-                this.trySend(emptyList<User>()).isSuccess
+                this.trySend(emptyList()).isSuccess
             }
         }
         awaitClose { registration.remove() }
@@ -82,11 +82,11 @@ class ChatRepository @Inject constructor(
         chat.child(message.sender!!).child(message.receiver!!).push().setValue(message)
         chat.child(message.receiver!!).child(message.sender!!).push().setValue(message)
     }
-    suspend fun seenMessage(recipientId : String, currentUserId : String) = withContext(dispatcher){
-        val databaseReference = chat.child("$recipientId/$currentUserId").limitToLast(10)
-        val messagesSnapshot = databaseReference.get().await()
+    suspend fun seenMessage(ownerId : String, participantId : String) = withContext(dispatcher){
         val hashMap = HashMap<String, Any>()
         hashMap["seen"] = true
+        val databaseReference = chat.child("$ownerId/$participantId").limitToLast(5)
+        val messagesSnapshot = databaseReference.get().await()
         messagesSnapshot.children.forEach{ ds ->
             val message = ds.getValue(Message::class.java)
             if(message != null){
@@ -94,7 +94,7 @@ class ChatRepository @Inject constructor(
             }
         }
     }
-    suspend fun getLastMessage(ownerId : String, participantId : String) : Flow<Message> = callbackFlow<Message> {
+    suspend fun getLastMessage(ownerId : String, participantId : String) : Flow<Message> = callbackFlow {
         val query = chat.child("$ownerId/$participantId")
             .orderByKey().limitToLast(1)
         val registration = query.addValueEventListener(object : ValueEventListener {

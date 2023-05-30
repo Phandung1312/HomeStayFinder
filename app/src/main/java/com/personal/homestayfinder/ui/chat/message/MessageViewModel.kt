@@ -43,6 +43,7 @@ class MessageViewModel @Inject constructor(
                 message.sender = senderId
                 message.receiver = receiver.value?.userId
                 message.imagesUrl = imagesList.value?.map { it.toString() }?.toMutableList() ?: ArrayList()
+                message.seen = false
                 setDateTimeSubmit()
             }
             chatRepository.sendMessage(currentMessage.value!!)
@@ -58,6 +59,7 @@ class MessageViewModel @Inject constructor(
     fun seenMessage(recipientId: String, currentUserId: String){
         viewModelScope.launch(handler) {
             chatRepository.seenMessage(recipientId, currentUserId)
+            chatRepository.seenMessage(currentUserId, recipientId)
         }
     }
     fun getReferentCurrentUserChat(currentUserId : String, recipientId : String) : DatabaseReference{
