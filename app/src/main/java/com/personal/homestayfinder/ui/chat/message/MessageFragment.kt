@@ -59,7 +59,7 @@ class MessageFragment : BaseFragment<MessageClass>(MessageClass::inflate) {
     }
     fun openGalley(){
         Dexter.withContext(activity).withPermission(
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
+            android.Manifest.permission.READ_MEDIA_IMAGES
         ).withListener(object : PermissionListener {
             override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
                 val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
