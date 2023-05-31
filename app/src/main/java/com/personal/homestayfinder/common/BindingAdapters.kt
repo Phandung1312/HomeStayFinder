@@ -13,7 +13,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -22,7 +21,6 @@ import com.personal.homestayfinder.data.models.Location
 import com.personal.homestayfinder.base.adapters.LocationAdapter
 import com.personal.homestayfinder.base.adapters.MessageImageAdapter
 import com.personal.homestayfinder.data.models.Message
-import com.personal.homestayfinder.data.models.RoomType
 import com.personal.homestayfinder.ui.chat.message.MessageImageClickListener
 import java.time.Duration
 import java.time.LocalDateTime
@@ -85,12 +83,6 @@ object BindingAdapters {
         if (currentLocation == null) {
             view.text = null
         }
-    }
-
-    @JvmStatic
-    @BindingAdapter("currentRoomType")
-    fun setItemRoomTypeView(view: AutoCompleteTextView, typeName: String?) {
-        view.setText(typeName)
     }
 
     @JvmStatic
@@ -187,7 +179,7 @@ object BindingAdapters {
     @BindingAdapter("acreage")
     fun setAcreage(textView: TextView, acreage: String?) {
         acreage?.let {
-            val htmlString = "${acreage} m\u00B2"
+            val htmlString = "$acreage m\u00B2"
             textView.text = Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY)
         }
     }
