@@ -19,4 +19,6 @@ A hostel finder app that using MVVM pattern and clean architecture
 # Link Demo
 
 # Screenshots
-![343407210_223890590398198_4965503645986891022_n](https://github.com/Phandung1312/HomeStayFinder/assets/104301662/1c17840c-a65f-4bf3-8f3e-4866b9857296)
+- Home
+
+<img src="https://github.com/Phandung1312/HomeStayFinder/assets/104301662/91301991-c981-4f1b-a7c2-7c01f8764e3f" width="250" alt="Home /> 
