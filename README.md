@@ -17,7 +17,7 @@ A hostel finder app that using MVVM pattern and clean architecture
 - Send messages, schedule appointments with the room owner.
 
 # Link Demo
-[Click here to watch demo video]("https://www.youtube.com/watch?v=PlAOejKYkEM")
+[Click here to watch demo video](https://www.youtube.com/watch?v=PlAOejKYkEM)
 # Screenshots
 - Home
 <img src="https://github.com/Phandung1312/HomeStayFinder/assets/104301662/91301991-c981-4f1b-a7c2-7c01f8764e3f" width="200" alt="Home" /> 
