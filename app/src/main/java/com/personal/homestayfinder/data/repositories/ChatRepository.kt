@@ -60,7 +60,7 @@ class ChatRepository @Inject constructor(
                 this.trySend(users).isSuccess
             }
             else{
-                this.trySend(emptyList()).isSuccess
+                this.trySend(emptyList<User>( )).isSuccess
             }
         }
         awaitClose { registration.remove() }
@@ -94,7 +94,7 @@ class ChatRepository @Inject constructor(
             }
         }
     }
-    suspend fun getLastMessage(ownerId : String, participantId : String) : Flow<Message> = callbackFlow {
+    suspend fun getLastMessage(ownerId : String, participantId : String) : Flow<Message> = callbackFlow<Message> {
         val query = chat.child("$ownerId/$participantId")
             .orderByKey().limitToLast(1)
         val registration = query.addValueEventListener(object : ValueEventListener {
