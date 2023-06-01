@@ -13,9 +13,10 @@ A hostel finder app that using MVVM pattern and clean architecture
 - Android Jetpack
 
 ## 2, Main features
-- Post room rental ads,search for room rentals
-- Send messages, schedule appointments with the room owner.
-
+- CRUD post room rentals.
+- Search for rooms based on different crieria.
+- View all the rooms that have been posted by the room owner.
+- Send messages, schedule appointments and phone call with the room owner.
 # Link Demo
 [Click here to watch demo video](https://www.youtube.com/watch?v=PlAOejKYkEM)
 # Screenshots
